@@ -1,0 +1,39 @@
+// Codigo
+
+program Exemplo5;
+var
+    mensagem : string;
+begin
+    mensagem := 'Olá, mundo;  { A string não foi fechada com aspas duplas }
+    writeln(mensagem);
+end.
+
+// Saida
+<PROGRAM, program> na linha 1, coluna 0
+<ID, Exemplo5> na linha 1, coluna 8
+<SMB_SEM, ;> na linha 1, coluna 16
+<VAR, var> na linha 2, coluna 18
+<ID, mensagem> na linha 3, coluna 26
+<SMB_COL, :> na linha 3, coluna 35
+<ID, string> na linha 3, coluna 37
+<SMB_SEM, ;> na linha 3, coluna 43
+<BEGIN, begin> na linha 4, coluna 45
+<ID, mensagem> na linha 5, coluna 55
+<OP_ASS, :=> na linha 5, coluna 64
+Erro: string nao fechada na linha 5, coluna 67
+
+Tabela de Simbolos:
+program: program
+var: var
+integer: integer
+real: real
+begin: begin
+end: end
+if: if
+then: then
+else: else
+while: while
+do: do
+Exemplo5: ID
+mensagem: ID
+string: ID

@@ -1,0 +1,58 @@
+// Codigo
+
+program Exemplo2;
+var
+    x : real;
+begin
+    x := 100.5;
+    while x > 0 do
+        x := x - 1.5;
+end.
+
+// Saida
+
+<PROGRAM, program> na linha 1, coluna 0
+<ID, Exemplo2> na linha 1, coluna 8
+<SMB_SEM, ;> na linha 1, coluna 16
+<VAR, var> na linha 2, coluna 18
+<ID, x> na linha 3, coluna 26
+<SMB_COL, :> na linha 3, coluna 28
+<REAL, real> na linha 3, coluna 30
+<SMB_SEM, ;> na linha 3, coluna 34
+<BEGIN, begin> na linha 4, coluna 36
+<ID, x> na linha 5, coluna 46
+<OP_ASS, :=> na linha 5, coluna 48
+<NUM_INT, 100> na linha 5, coluna 51
+<SMB_DOT, .> na linha 5, coluna 54
+<NUM_INT, 5> na linha 5, coluna 55
+<SMB_SEM, ;> na linha 5, coluna 56
+<WHILE, while> na linha 6, coluna 62
+<ID, x> na linha 6, coluna 68
+<OP_GT, >> na linha 6, coluna 70
+<NUM_INT, 0> na linha 6, coluna 72
+<DO, do> na linha 6, coluna 74
+<ID, x> na linha 7, coluna 85
+<OP_ASS, :=> na linha 7, coluna 87
+<ID, x> na linha 7, coluna 90
+<OP_MIN, -> na linha 7, coluna 92
+<NUM_INT, 1> na linha 7, coluna 94
+<SMB_DOT, .> na linha 7, coluna 95
+<NUM_INT, 5> na linha 7, coluna 96
+<SMB_SEM, ;> na linha 7, coluna 97
+<END, end> na linha 8, coluna 99
+<SMB_DOT, .> na linha 8, coluna 102
+
+Tabela de Simbolos:
+program: program
+var: var
+integer: integer
+real: real
+begin: begin
+end: end
+if: if
+then: then
+else: else
+while: while
+do: do
+Exemplo2: ID
+x: ID

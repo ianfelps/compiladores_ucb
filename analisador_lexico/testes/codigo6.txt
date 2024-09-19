@@ -1,0 +1,45 @@
+// Codigo
+
+program Exemplo6;
+var
+    x : integer;
+begin
+    x := 10;
+    z := x $ 2;  { O símbolo '$' é inválido }
+end.
+
+// Saida
+
+<PROGRAM, program> na linha 1, coluna 0
+<ID, Exemplo6> na linha 1, coluna 8
+<SMB_SEM, ;> na linha 1, coluna 16
+<VAR, var> na linha 2, coluna 18
+<ID, x> na linha 3, coluna 26
+<SMB_COL, :> na linha 3, coluna 28
+<INTEGER, integer> na linha 3, coluna 30
+<SMB_SEM, ;> na linha 3, coluna 37
+<BEGIN, begin> na linha 4, coluna 39
+<ID, x> na linha 5, coluna 49
+<OP_ASS, :=> na linha 5, coluna 51
+<NUM_INT, 10> na linha 5, coluna 54
+<SMB_SEM, ;> na linha 5, coluna 56
+<ID, z> na linha 6, coluna 62
+<OP_ASS, :=> na linha 6, coluna 64
+<ID, x> na linha 6, coluna 67
+Caractere ilegal '$' na linha 6, coluna 69
+
+Tabela de Simbolos:
+program: program
+var: var
+integer: integer
+real: real
+begin: begin
+end: end
+if: if
+then: then
+else: else
+while: while
+do: do
+Exemplo6: ID
+x: ID
+z: ID
