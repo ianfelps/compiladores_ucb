@@ -6,17 +6,17 @@ class AnalisadorLexico:
     # inicializa o analisador lexico
     def __init__(self):
         self.reserved = {
-            'program': 'PROGRAM', # palavras reservadas
-            'var': 'VAR',
-            'integer': 'INTEGER',
-            'real': 'REAL',
-            'begin': 'BEGIN',
-            'end': 'END',
-            'if': 'IF',
-            'then': 'THEN',
-            'else': 'ELSE',
-            'while': 'WHILE',
-            'do': 'DO'
+            'program': 'PAL_RES_PROGRAM', # palavras reservadas
+            'var': 'PAL_RES_VAR',
+            'integer': 'PAL_RES_INTEGER',
+            'real': 'PAL_RES_REAL',
+            'begin': 'PAL_RES_BEGIN',
+            'end': 'PAL_RES_END',
+            'if': 'PAL_RES_IF',
+            'then': 'PAL_RES_THEN',
+            'else': 'PAL_RES_ELSE',
+            'while': 'PAL_RES_WHILE',
+            'do': 'PAL_RES_DO'
         }
         
         self.tokens = [
