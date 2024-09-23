@@ -9,6 +9,7 @@ begin
 end.
 
 // Saida
+
 <PAL_RES_PROGRAM, program> na linha 1, coluna 1
 <ID, Exemplo5 (ID: 1)> na linha 1, coluna 9
 <SMB_SEM, ;> na linha 1, coluna 17
