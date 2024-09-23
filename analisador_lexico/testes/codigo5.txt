@@ -9,18 +9,18 @@ begin
 end.
 
 // Saida
-<PAL_RES_PROGRAM, program> na linha 1, coluna 0
-<ID, Exemplo5 (ID: 1)> na linha 1, coluna 8
-<SMB_SEM, ;> na linha 1, coluna 16
-<PAL_RES_VAR, var> na linha 2, coluna 18
-<ID, mensagem (ID: 2)> na linha 3, coluna 26
-<SMB_COL, :> na linha 3, coluna 35
-<ID, string (ID: 3)> na linha 3, coluna 37
-<SMB_SEM, ;> na linha 3, coluna 43
-<PAL_RES_BEGIN, begin> na linha 4, coluna 45
-<ID, mensagem (ID: 2)> na linha 5, coluna 55
-<OP_ASS, :=> na linha 5, coluna 64
-Erro: string nao fechada na linha 5, coluna 67
+<PAL_RES_PROGRAM, program> na linha 1, coluna 1
+<ID, Exemplo5 (ID: 1)> na linha 1, coluna 9
+<SMB_SEM, ;> na linha 1, coluna 17
+<PAL_RES_VAR, var> na linha 2, coluna 1
+<ID, mensagem (ID: 2)> na linha 3, coluna 5
+<SMB_COL, :> na linha 3, coluna 14
+<ID, string (ID: 3)> na linha 3, coluna 16
+<SMB_SEM, ;> na linha 3, coluna 22
+<PAL_RES_BEGIN, begin> na linha 4, coluna 1
+<ID, mensagem (ID: 2)> na linha 5, coluna 5
+<OP_ASS, :=> na linha 5, coluna 14
+Erro: string nao fechada na linha 5, coluna 17
 
 Tabela de Simbolos:
 program: ('PAL_RES_PROGRAM', None)

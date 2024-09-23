@@ -12,28 +12,28 @@ end.
 
 // Saida
 
-<PAL_RES_PROGRAM, program> na linha 1, coluna 0
-<ID, Exemplo4 (ID: 1)> na linha 1, coluna 8
-<SMB_SEM, ;> na linha 1, coluna 16
-<PAL_RES_VAR, var> na linha 2, coluna 18
-<ID, a (ID: 2)> na linha 3, coluna 26
-<SMB_COM, ,> na linha 3, coluna 27
-<ID, b (ID: 3)> na linha 3, coluna 29
-<SMB_COL, :> na linha 3, coluna 31
-<PAL_RES_INTEGER, integer> na linha 3, coluna 33
-<SMB_SEM, ;> na linha 3, coluna 40
-<PAL_RES_BEGIN, begin> na linha 4, coluna 42
-<ID, a (ID: 2)> na linha 5, coluna 52
-<OP_ASS, :=> na linha 5, coluna 54
-<NUM_INT, 10> na linha 5, coluna 57
-<SMB_SEM, ;> na linha 5, coluna 59
-<ID, b (ID: 3)> na linha 6, coluna 65
-<OP_ASS, :=> na linha 6, coluna 67
-<NUM_INT, 20> na linha 6, coluna 70
-<SMB_SEM, ;> na linha 6, coluna 72
-<PAL_RES_IF, if> na linha 7, coluna 78
-<ID, a (ID: 2)> na linha 7, coluna 81
-Caractere ilegal '@' na linha 7, coluna 83
+<PAL_RES_PROGRAM, program> na linha 1, coluna 1
+<ID, Exemplo4 (ID: 1)> na linha 1, coluna 9
+<SMB_SEM, ;> na linha 1, coluna 17
+<PAL_RES_VAR, var> na linha 2, coluna 1
+<ID, a (ID: 2)> na linha 3, coluna 5
+<SMB_COM, ,> na linha 3, coluna 6
+<ID, b (ID: 3)> na linha 3, coluna 8
+<SMB_COL, :> na linha 3, coluna 10
+<PAL_RES_INTEGER, integer> na linha 3, coluna 12
+<SMB_SEM, ;> na linha 3, coluna 19
+<PAL_RES_BEGIN, begin> na linha 4, coluna 1
+<ID, a (ID: 2)> na linha 5, coluna 5
+<OP_ASS, :=> na linha 5, coluna 7
+<NUM_INT, 10> na linha 5, coluna 10
+<SMB_SEM, ;> na linha 5, coluna 12
+<ID, b (ID: 3)> na linha 6, coluna 5
+<OP_ASS, :=> na linha 6, coluna 7
+<NUM_INT, 20> na linha 6, coluna 10
+<SMB_SEM, ;> na linha 6, coluna 12
+<PAL_RES_IF, if> na linha 7, coluna 5
+<ID, a (ID: 2)> na linha 7, coluna 8
+Caractere ilegal '@' na linha 7, coluna 10
 
 Tabela de Simbolos:
 program: ('PAL_RES_PROGRAM', None)

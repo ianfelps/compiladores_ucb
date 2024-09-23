@@ -11,36 +11,36 @@ end.
 
 // Saida
 
-<PAL_RES_PROGRAM, program> na linha 1, coluna 0
-<ID, Exemplo2 (ID: 1)> na linha 1, coluna 8
-<SMB_SEM, ;> na linha 1, coluna 16
-<PAL_RES_VAR, var> na linha 2, coluna 18
-<ID, x (ID: 2)> na linha 3, coluna 26
-<SMB_COL, :> na linha 3, coluna 28
-<PAL_RES_REAL, real> na linha 3, coluna 30
-<SMB_SEM, ;> na linha 3, coluna 34
-<PAL_RES_BEGIN, begin> na linha 4, coluna 36
-<ID, x (ID: 2)> na linha 5, coluna 46
-<OP_ASS, :=> na linha 5, coluna 48
-<NUM_INT, 100> na linha 5, coluna 51
-<SMB_DOT, .> na linha 5, coluna 54
-<NUM_INT, 5> na linha 5, coluna 55
-<SMB_SEM, ;> na linha 5, coluna 56
-<PAL_RES_WHILE, while> na linha 6, coluna 62
-<ID, x (ID: 2)> na linha 6, coluna 68
-<OP_GT, >> na linha 6, coluna 70
-<NUM_INT, 0> na linha 6, coluna 72
-<PAL_RES_DO, do> na linha 6, coluna 74
-<ID, x (ID: 2)> na linha 7, coluna 85
-<OP_ASS, :=> na linha 7, coluna 87
-<ID, x (ID: 2)> na linha 7, coluna 90
-<OP_MIN, -> na linha 7, coluna 92
-<NUM_INT, 1> na linha 7, coluna 94
-<SMB_DOT, .> na linha 7, coluna 95
-<NUM_INT, 5> na linha 7, coluna 96
-<SMB_SEM, ;> na linha 7, coluna 97
-<PAL_RES_END, end> na linha 8, coluna 99
-<SMB_DOT, .> na linha 8, coluna 102
+<PAL_RES_PROGRAM, program> na linha 1, coluna 1
+<ID, Exemplo2 (ID: 1)> na linha 1, coluna 9
+<SMB_SEM, ;> na linha 1, coluna 17
+<PAL_RES_VAR, var> na linha 2, coluna 1
+<ID, x (ID: 2)> na linha 3, coluna 5
+<SMB_COL, :> na linha 3, coluna 7
+<PAL_RES_REAL, real> na linha 3, coluna 9
+<SMB_SEM, ;> na linha 3, coluna 13
+<PAL_RES_BEGIN, begin> na linha 4, coluna 1
+<ID, x (ID: 2)> na linha 5, coluna 5
+<OP_ASS, :=> na linha 5, coluna 7
+<NUM_INT, 100> na linha 5, coluna 10
+<SMB_DOT, .> na linha 5, coluna 13
+<NUM_INT, 5> na linha 5, coluna 14
+<SMB_SEM, ;> na linha 5, coluna 15
+<PAL_RES_WHILE, while> na linha 6, coluna 5
+<ID, x (ID: 2)> na linha 6, coluna 11
+<OP_GT, >> na linha 6, coluna 13
+<NUM_INT, 0> na linha 6, coluna 15
+<PAL_RES_DO, do> na linha 6, coluna 17
+<ID, x (ID: 2)> na linha 7, coluna 9
+<OP_ASS, :=> na linha 7, coluna 11
+<ID, x (ID: 2)> na linha 7, coluna 14
+<OP_MIN, -> na linha 7, coluna 16
+<NUM_INT, 1> na linha 7, coluna 18
+<SMB_DOT, .> na linha 7, coluna 19
+<NUM_INT, 5> na linha 7, coluna 20
+<SMB_SEM, ;> na linha 7, coluna 21
+<PAL_RES_END, end> na linha 8, coluna 1
+<SMB_DOT, .> na linha 8, coluna 4
 
 Tabela de Simbolos:
 program: ('PAL_RES_PROGRAM', None)

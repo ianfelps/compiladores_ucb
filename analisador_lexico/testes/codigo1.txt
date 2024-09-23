@@ -14,44 +14,44 @@ end.
 
 // Saida
 
-<PAL_RES_PROGRAM, program> na linha 1, coluna 0
-<ID, Exemplo1 (ID: 1)> na linha 1, coluna 8
-<SMB_SEM, ;> na linha 1, coluna 16
-<PAL_RES_VAR, var> na linha 2, coluna 18
-<ID, a (ID: 2)> na linha 3, coluna 26
-<SMB_COM, ,> na linha 3, coluna 27
-<ID, b (ID: 3)> na linha 3, coluna 29
-<SMB_COL, :> na linha 3, coluna 31
-<PAL_RES_INTEGER, integer> na linha 3, coluna 33
-<SMB_SEM, ;> na linha 3, coluna 40
-<PAL_RES_BEGIN, begin> na linha 4, coluna 42
-<ID, a (ID: 2)> na linha 5, coluna 52
-<OP_ASS, :=> na linha 5, coluna 54
-<NUM_INT, 10> na linha 5, coluna 57
-<SMB_SEM, ;> na linha 5, coluna 59
-<ID, b (ID: 3)> na linha 6, coluna 91
-<OP_ASS, :=> na linha 6, coluna 93
-<NUM_INT, 20> na linha 6, coluna 96
-<SMB_SEM, ;> na linha 6, coluna 98
-<PAL_RES_IF, if> na linha 7, coluna 130
-<ID, a (ID: 2)> na linha 7, coluna 133
-<OP_GT, >> na linha 7, coluna 135
-<ID, b (ID: 3)> na linha 7, coluna 137
-<PAL_RES_THEN, then> na linha 7, coluna 139
-<ID, a (ID: 2)> na linha 8, coluna 187
-<OP_ASS, :=> na linha 8, coluna 189
-<ID, a (ID: 2)> na linha 8, coluna 192
-<OP_MIN, -> na linha 8, coluna 194
-<NUM_INT, 1> na linha 8, coluna 196
-<PAL_RES_ELSE, else> na linha 9, coluna 222
-<ID, b (ID: 3)> na linha 10, coluna 235
-<OP_ASS, :=> na linha 10, coluna 237
-<ID, b (ID: 3)> na linha 10, coluna 240
-<OP_AD, +> na linha 10, coluna 242
-<NUM_INT, 1> na linha 10, coluna 244
-<SMB_SEM, ;> na linha 10, coluna 245
-<PAL_RES_END, end> na linha 11, coluna 267
-<SMB_DOT, .> na linha 11, coluna 270
+<PAL_RES_PROGRAM, program> na linha 1, coluna 1
+<ID, Exemplo1 (ID: 1)> na linha 1, coluna 9
+<SMB_SEM, ;> na linha 1, coluna 17
+<PAL_RES_VAR, var> na linha 2, coluna 1
+<ID, a (ID: 2)> na linha 3, coluna 5
+<SMB_COM, ,> na linha 3, coluna 6
+<ID, b (ID: 3)> na linha 3, coluna 8
+<SMB_COL, :> na linha 3, coluna 10
+<PAL_RES_INTEGER, integer> na linha 3, coluna 12
+<SMB_SEM, ;> na linha 3, coluna 19
+<PAL_RES_BEGIN, begin> na linha 4, coluna 1
+<ID, a (ID: 2)> na linha 5, coluna 5
+<OP_ASS, :=> na linha 5, coluna 7
+<NUM_INT, 10> na linha 5, coluna 10
+<SMB_SEM, ;> na linha 5, coluna 12
+<ID, b (ID: 3)> na linha 6, coluna 5
+<OP_ASS, :=> na linha 6, coluna 7
+<NUM_INT, 20> na linha 6, coluna 10
+<SMB_SEM, ;> na linha 6, coluna 12
+<PAL_RES_IF, if> na linha 7, coluna 5
+<ID, a (ID: 2)> na linha 7, coluna 8
+<OP_GT, >> na linha 7, coluna 10
+<ID, b (ID: 3)> na linha 7, coluna 12
+<PAL_RES_THEN, then> na linha 7, coluna 14
+<ID, a (ID: 2)> na linha 8, coluna 9
+<OP_ASS, :=> na linha 8, coluna 11
+<ID, a (ID: 2)> na linha 8, coluna 14
+<OP_MIN, -> na linha 8, coluna 16
+<NUM_INT, 1> na linha 8, coluna 18
+<PAL_RES_ELSE, else> na linha 9, coluna 5
+<ID, b (ID: 3)> na linha 10, coluna 9
+<OP_ASS, :=> na linha 10, coluna 11
+<ID, b (ID: 3)> na linha 10, coluna 14
+<OP_AD, +> na linha 10, coluna 16
+<NUM_INT, 1> na linha 10, coluna 18
+<SMB_SEM, ;> na linha 10, coluna 19
+<PAL_RES_END, end> na linha 11, coluna 1
+<SMB_DOT, .> na linha 11, coluna 4
 
 Tabela de Simbolos:
 program: ('PAL_RES_PROGRAM', None)

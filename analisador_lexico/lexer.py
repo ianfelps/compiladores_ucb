@@ -34,6 +34,13 @@ class AnalisadorLexico:
         
         self.lexer = lex.lex(module=self)
 
+    # calcular a coluna do token
+    def find_column(self, input_text, token):
+        last_cr = input_text.rfind('\n', 0, token.lexpos)
+        if last_cr < 0:
+            last_cr = -1
+        return (token.lexpos - last_cr)
+
     # regras de tokens com expressões regulares
     t_OP_EQ  = r'='
     t_OP_GE  = r'>='
@@ -104,10 +111,11 @@ class AnalisadorLexico:
 
     # tratar caracteres ilegais e strings nao fechadas
     def t_error(self, t):
+        coluna = self.find_column(self.lexer.lexdata, t)
         if t.value[0] == "'":
-            linha_erro = f"Erro: string nao fechada na linha {t.lineno}, coluna {t.lexpos}\n"
+            linha_erro = f"Erro: string nao fechada na linha {t.lineno}, coluna {coluna}\n"
         else:
-            linha_erro = f"Caractere ilegal '{t.value[0]}' na linha {t.lineno}, coluna {t.lexpos}\n"
+            linha_erro = f"Caractere ilegal '{t.value[0]}' na linha {t.lineno}, coluna {coluna}\n"
         
         with open('saida.lex', 'a') as arquivo_lex:
             arquivo_lex.write(linha_erro)
@@ -117,7 +125,8 @@ class AnalisadorLexico:
 
     # salva e imprime os tokens no arquivo de saida
     def salvar_e_imprimir_token(self, t):
-        linha = f"<{t.type}, {t.value}> na linha {t.lineno}, coluna {t.lexpos}\n"
+        coluna = self.find_column(self.lexer.lexdata, t)  # atualiza a coluna corretamente
+        linha = f"<{t.type}, {t.value}> na linha {t.lineno}, coluna {coluna}\n"
         with open('saida.lex', 'a') as arquivo_lex:
             arquivo_lex.write(linha)
 
