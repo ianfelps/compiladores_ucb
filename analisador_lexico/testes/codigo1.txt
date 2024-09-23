@@ -14,57 +14,57 @@ end.
 
 // Saida
 
-<PROGRAM, program> na linha 1, coluna 0
-<ID, Exemplo1> na linha 1, coluna 8
+<PAL_RES_PROGRAM, program> na linha 1, coluna 0
+<ID, Exemplo1 (ID: 1)> na linha 1, coluna 8
 <SMB_SEM, ;> na linha 1, coluna 16
-<VAR, var> na linha 2, coluna 18
-<ID, a> na linha 3, coluna 26
+<PAL_RES_VAR, var> na linha 2, coluna 18
+<ID, a (ID: 2)> na linha 3, coluna 26
 <SMB_COM, ,> na linha 3, coluna 27
-<ID, b> na linha 3, coluna 29
+<ID, b (ID: 3)> na linha 3, coluna 29
 <SMB_COL, :> na linha 3, coluna 31
-<INTEGER, integer> na linha 3, coluna 33
+<PAL_RES_INTEGER, integer> na linha 3, coluna 33
 <SMB_SEM, ;> na linha 3, coluna 40
-<BEGIN, begin> na linha 4, coluna 42
-<ID, a> na linha 5, coluna 52
+<PAL_RES_BEGIN, begin> na linha 4, coluna 42
+<ID, a (ID: 2)> na linha 5, coluna 52
 <OP_ASS, :=> na linha 5, coluna 54
 <NUM_INT, 10> na linha 5, coluna 57
 <SMB_SEM, ;> na linha 5, coluna 59
-<ID, b> na linha 6, coluna 91
+<ID, b (ID: 3)> na linha 6, coluna 91
 <OP_ASS, :=> na linha 6, coluna 93
 <NUM_INT, 20> na linha 6, coluna 96
 <SMB_SEM, ;> na linha 6, coluna 98
-<IF, if> na linha 7, coluna 130
-<ID, a> na linha 7, coluna 133
+<PAL_RES_IF, if> na linha 7, coluna 130
+<ID, a (ID: 2)> na linha 7, coluna 133
 <OP_GT, >> na linha 7, coluna 135
-<ID, b> na linha 7, coluna 137
-<THEN, then> na linha 7, coluna 139
-<ID, a> na linha 8, coluna 187
+<ID, b (ID: 3)> na linha 7, coluna 137
+<PAL_RES_THEN, then> na linha 7, coluna 139
+<ID, a (ID: 2)> na linha 8, coluna 187
 <OP_ASS, :=> na linha 8, coluna 189
-<ID, a> na linha 8, coluna 192
+<ID, a (ID: 2)> na linha 8, coluna 192
 <OP_MIN, -> na linha 8, coluna 194
 <NUM_INT, 1> na linha 8, coluna 196
-<ELSE, else> na linha 9, coluna 222
-<ID, b> na linha 10, coluna 235
+<PAL_RES_ELSE, else> na linha 9, coluna 222
+<ID, b (ID: 3)> na linha 10, coluna 235
 <OP_ASS, :=> na linha 10, coluna 237
-<ID, b> na linha 10, coluna 240
+<ID, b (ID: 3)> na linha 10, coluna 240
 <OP_AD, +> na linha 10, coluna 242
 <NUM_INT, 1> na linha 10, coluna 244
 <SMB_SEM, ;> na linha 10, coluna 245
-<END, end> na linha 11, coluna 267
+<PAL_RES_END, end> na linha 11, coluna 267
 <SMB_DOT, .> na linha 11, coluna 270
 
 Tabela de Simbolos:
-program: program
-var: var
-integer: integer
-real: real
-begin: begin
-end: end
-if: if
-then: then
-else: else
-while: while
-do: do
-Exemplo1: ID
-a: ID
-b: ID
+program: ('PAL_RES_PROGRAM', None)
+var: ('PAL_RES_VAR', None)
+integer: ('PAL_RES_INTEGER', None)
+real: ('PAL_RES_REAL', None)
+begin: ('PAL_RES_BEGIN', None)
+end: ('PAL_RES_END', None)
+if: ('PAL_RES_IF', None)
+then: ('PAL_RES_THEN', None)
+else: ('PAL_RES_ELSE', None)
+while: ('PAL_RES_WHILE', None)
+do: ('PAL_RES_DO', None)
+Exemplo1: ('ID', 1)
+a: ('ID', 2)
+b: ('ID', 3)

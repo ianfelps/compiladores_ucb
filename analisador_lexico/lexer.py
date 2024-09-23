@@ -69,8 +69,14 @@ class AnalisadorLexico:
     # regras para identificadores, palavras reservadas e strings
     def t_ID(self, t):
         r'[a-zA-Z_][a-zA-Z_0-9]*'
-        t.type = self.reserved.get(t.value, 'ID')    # verifica se eh uma palavra reservada
-        self.tabela_simbolos.adicionar_na_tabela(t.value, t.type)
+        t.type = self.reserved.get(t.value, 'ID')  # verifica se eh uma palavra reservada ou identificador
+        self.tabela_simbolos.adicionar_na_tabela(t.value, t.type)  # adiciona na tabela de simbolos
+        
+        # se for um identificador, incluir o ID unico na saida
+        if t.type == 'ID':
+            id_unico = self.tabela_simbolos.obter_id(t.value)
+            t.value = f"{t.value} (ID: {id_unico})"
+        
         return t
 
     def t_STRING(self, t):

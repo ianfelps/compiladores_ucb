@@ -9,31 +9,31 @@ begin
 end.
 
 // Saida
-<PROGRAM, program> na linha 1, coluna 0
-<ID, Exemplo5> na linha 1, coluna 8
+<PAL_RES_PROGRAM, program> na linha 1, coluna 0
+<ID, Exemplo5 (ID: 1)> na linha 1, coluna 8
 <SMB_SEM, ;> na linha 1, coluna 16
-<VAR, var> na linha 2, coluna 18
-<ID, mensagem> na linha 3, coluna 26
+<PAL_RES_VAR, var> na linha 2, coluna 18
+<ID, mensagem (ID: 2)> na linha 3, coluna 26
 <SMB_COL, :> na linha 3, coluna 35
-<ID, string> na linha 3, coluna 37
+<ID, string (ID: 3)> na linha 3, coluna 37
 <SMB_SEM, ;> na linha 3, coluna 43
-<BEGIN, begin> na linha 4, coluna 45
-<ID, mensagem> na linha 5, coluna 55
+<PAL_RES_BEGIN, begin> na linha 4, coluna 45
+<ID, mensagem (ID: 2)> na linha 5, coluna 55
 <OP_ASS, :=> na linha 5, coluna 64
 Erro: string nao fechada na linha 5, coluna 67
 
 Tabela de Simbolos:
-program: program
-var: var
-integer: integer
-real: real
-begin: begin
-end: end
-if: if
-then: then
-else: else
-while: while
-do: do
-Exemplo5: ID
-mensagem: ID
-string: ID
+program: ('PAL_RES_PROGRAM', None)
+var: ('PAL_RES_VAR', None)
+integer: ('PAL_RES_INTEGER', None)
+real: ('PAL_RES_REAL', None)
+begin: ('PAL_RES_BEGIN', None)
+end: ('PAL_RES_END', None)
+if: ('PAL_RES_IF', None)
+then: ('PAL_RES_THEN', None)
+else: ('PAL_RES_ELSE', None)
+while: ('PAL_RES_WHILE', None)
+do: ('PAL_RES_DO', None)
+Exemplo5: ('ID', 1)
+mensagem: ('ID', 2)
+string: ('ID', 3)
