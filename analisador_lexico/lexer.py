@@ -63,15 +63,16 @@ class AnalisadorLexico:
     t_SMB_COL = r':'
 
     # regras para numeros inteiros e reais
+    def t_NUM_FLT(self, t):
+        r'\d+\.\d+'
+        t.value = float(t.value)
+        return t
+
     def t_NUM_INT(self, t):
         r'\d+'
         t.value = int(t.value)
         return t
 
-    def t_NUM_FLT(self, t):
-        r'\d+\.\d+'
-        t.value = float(t.value)
-        return t
 
     # regras para identificadores, palavras reservadas e strings
     def t_ID(self, t):

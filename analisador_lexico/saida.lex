@@ -27,9 +27,7 @@
 <OP_AD, +> na linha 10, coluna 12
 <ID, y (ID: 3)> na linha 10, coluna 14
 <OP_MUL, *> na linha 10, coluna 16
-<NUM_INT, 2> na linha 10, coluna 18
-<SMB_DOT, .> na linha 10, coluna 19
-<NUM_INT, 5> na linha 10, coluna 20
+<NUM_FLT, 2.5> na linha 10, coluna 18
 <SMB_SEM, ;> na linha 10, coluna 21
 <PAL_RES_IF, if> na linha 12, coluna 5
 <ID, x (ID: 2)> na linha 12, coluna 8
@@ -58,9 +56,7 @@
 <OP_ASS, :=> na linha 19, coluna 11
 <ID, z (ID: 4)> na linha 19, coluna 14
 <OP_MUL, *> na linha 19, coluna 16
-<NUM_INT, 1> na linha 19, coluna 18
-<SMB_DOT, .> na linha 19, coluna 19
-<NUM_INT, 5> na linha 19, coluna 20
+<NUM_FLT, 1.5> na linha 19, coluna 18
 <SMB_SEM, ;> na linha 19, coluna 21
 <ID, x (ID: 2)> na linha 20, coluna 9
 <OP_ASS, :=> na linha 20, coluna 11
