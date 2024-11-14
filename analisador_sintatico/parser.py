@@ -1,189 +1,167 @@
-import ply.lex as lex
 import ply.yacc as yacc
+from lexer import tokens
 
-# Definições do analisador léxico (tokens e literais)
-tokens = (
-    'ID', 'NUM_INT', 'NUM_FLT', 'OP_EQ', 'OP_GE', 'OP_MUL', 'OP_NE', 'OP_LE',
-    'OP_DIV', 'OP_GT', 'OP_AD', 'OP_ASS', 'OP_LT', 'OP_MIN', 'SMB_OBC', 
-    'SMB_COM', 'SMB_CBC', 'SMB_SEM', 'SMB_OPA', 'SMB_CPA', 'COLON', 'DOT'
-)
+# Regra inicial
+start = 'programa'
 
-# Palavras-chave
-reserved = {
-    'program': 'PROGRAM',
-    'var': 'VAR',
-    'integer': 'INTEGER',
-    'real': 'REAL',
-    'begin': 'BEGIN',
-    'end': 'END',
-    'if': 'IF',
-    'then': 'THEN',
-    'else': 'ELSE',
-    'while': 'WHILE',
-    'do': 'DO',
-}
+# Tabela de símbolos para armazenar variáveis declaradas
+symbol_table = set()
 
-tokens = list(tokens) + list(reserved.values())
+# Definição do programa principal
+def p_programa(p):
+    "programa : PROGRAM ID SEMI bloco DOT"
+    p[0] = ('programa', p[2], p[4])
 
-# Regras de tokens e palavras-chave para o analisador léxico
-t_OP_EQ = r'='
-t_OP_GE = r'>='
-t_OP_MUL = r'\*'
-t_OP_NE = r'<>'
-t_OP_LE = r'<='
-t_OP_DIV = r'/'
-t_OP_GT = r'>'
-t_OP_AD = r'\+'
-t_OP_ASS = r':='
-t_OP_LT = r'<'
-t_OP_MIN = r'-'
-t_SMB_OBC = r'\{'
-t_SMB_COM = r','
-t_SMB_CBC = r'\}'
-t_SMB_SEM = r';'
-t_SMB_OPA = r'\('
-t_SMB_CPA = r'\)'
-t_COLON = r':'
-t_DOT = r'\.'
+# Bloco e declaração de variáveis
+def p_bloco(p):
+    "bloco : parte_declaracoes_variaveis comando_composto"
+    p[0] = ('bloco', p[1], p[2])
 
-t_ignore = ' \t'
+def p_parte_declaracoes_variaveis(p):
+    """parte_declaracoes_variaveis : VAR declaracao_variaveis_list SEMI
+                                   | empty"""
+    p[0] = p[2] if len(p) > 2 else None
 
-def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'ID')
-    return t
+def p_declaracao_variaveis_list(p):
+    """declaracao_variaveis_list : declaracao_variaveis
+                                 | declaracao_variaveis_list SEMI declaracao_variaveis"""
+    p[0] = [p[1]] if len(p) == 2 else p[1] + [p[3]]
 
-def t_NUM_FLT(t):
-    r'\d+\.\d+'
-    t.value = float(t.value)
-    return t
+def p_declaracao_variaveis(p):
+    "declaracao_variaveis : lista_identificadores COLON tipo"
+    # Adiciona cada identificador na tabela de símbolos
+    for var in p[1]:
+        if var in symbol_table:
+            print(f"Erro: variável '{var}' já foi declarada.")
+        else:
+            symbol_table.add(var)
+    p[0] = ('declaracao_variaveis', p[1], p[3])
 
-def t_NUM_INT(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
+def p_lista_identificadores(p):
+    """lista_identificadores : ID
+                             | lista_identificadores COMMA ID"""
+    p[0] = [p[1]] if len(p) == 2 else p[1] + [p[3]]
 
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
+def p_tipo(p):
+    """tipo : INTEGER
+            | REAL
+            | BOOLEAN"""
+    p[0] = p[1]
 
-def t_error(t):
-    print(f"Caractere desconhecido '{t.value[0]}'")
-    t.lexer.skip(1)
+# Comando composto
+def p_comando_composto(p):
+    "comando_composto : BEGIN comando_list END"
+    p[0] = ('comando_composto', p[2])
 
-# Constroi o lexer
-lexer = lex.lex()
+def p_comando_list(p):
+    """comando_list : comando
+                    | comando_list SEMI comando"""
+    p[0] = [p[1]] if len(p) == 2 else p[1] + [p[3]]
 
-# Regras da gramática para o analisador sintático
-def p_program(p):
-    '''program : PROGRAM ID SMB_SEM var_declaration block DOT'''
-    print("Programa reconhecido!")
+# Definição de comandos
+def p_comando(p):
+    """comando : atribuicao
+               | comando_composto
+               | comando_condicional
+               | comando_repetitivo"""
+    p[0] = p[1]
 
-def p_block(p):
-    '''block : BEGIN statement_list END'''
-    pass
+# Atribuição
+def p_atribuicao(p):
+    "atribuicao : ID ASSIGN expressao"
+    # Verifica se a variável foi declarada antes de usá-la
+    if p[1] not in symbol_table:
+        print(f"Erro: variável '{p[1]}' não foi declarada.")
+    p[0] = ('atribuicao', p[1], p[3])
 
-def p_var_declaration(p):
-    '''var_declaration : VAR var_list
-                       | empty'''
-    pass
+# Comando condicional if ... else
+def p_comando_condicional(p):
+    """comando_condicional : IF expressao THEN comando
+                           | IF expressao THEN comando ELSE comando"""
+    p[0] = ('comando_condicional', p[2], p[4]) if len(p) == 5 else ('comando_condicional', p[2], p[4], p[6])
 
-def p_var_list(p):
-    '''var_list : id_list COLON type SMB_SEM var_list
-                | id_list COLON type SMB_SEM
-                | empty'''
-    pass
+# Comando repetitivo while
+def p_comando_repetitivo(p):
+    "comando_repetitivo : WHILE expressao DO comando"
+    p[0] = ('comando_repetitivo', p[2], p[4])
 
-def p_id_list(p):
-    '''id_list : ID
-               | ID SMB_COM id_list'''
-    pass
+# Expressões e operações
+def p_expressao(p):
+    """expressao : expressao_simples
+                 | expressao_simples relacao expressao_simples"""
+    p[0] = p[1] if len(p) == 2 else ('expressao', p[1], p[2], p[3])
 
-def p_type(p):
-    '''type : INTEGER
-            | REAL'''
-    pass
+def p_relacao(p):
+    """relacao : EQ
+               | NE
+               | LT
+               | LE
+               | GT
+               | GE"""
+    p[0] = p[1]
 
-def p_statement_list(p):
-    '''statement_list : statement statement_list
-                      | empty'''
-    pass
+def p_expressao_simples(p):
+    """expressao_simples : termo
+                         | expressao_simples PLUS termo
+                         | expressao_simples MINUS termo"""
+    p[0] = p[1] if len(p) == 2 else ('expressao_simples', p[1], p[2], p[3])
 
-def p_statement(p):
-    '''statement : assignment SMB_SEM
-                 | if_statement
-                 | while_statement
-                 | block SMB_SEM
-                 | empty'''
-    pass
+def p_termo(p):
+    """termo : fator
+             | termo TIMES fator
+             | termo DIVIDE fator"""
+    p[0] = p[1] if len(p) == 2 else ('termo', p[1], p[2])
 
-def p_assignment(p):
-    '''assignment : ID OP_ASS expression'''
-    pass
+def p_fator(p):
+    """fator : ID
+             | NUM_INT
+             | NUM_REAL
+             | LPAREN expressao RPAREN"""
+    if len(p) == 2 and isinstance(p[1], str):  # Caso seja uma variável ID
+        # Verifica se a variável foi declarada antes de usá-la
+        if p[1] not in symbol_table:
+            print(f"Erro: variável '{p[1]}' não foi declarada.")
+    p[0] = p[1] if len(p) == 2 else p[2]
 
-def p_if_statement(p):
-    '''if_statement : IF expression THEN statement else_clause'''
-    pass
-
-def p_else_clause(p):
-    '''else_clause : ELSE statement
-                   | empty'''
-    pass
-
-def p_while_statement(p):
-    '''while_statement : WHILE expression DO statement'''
-    pass
-
-def p_expression(p):
-    '''expression : expression OP_AD term
-                  | expression OP_MIN term
-                  | term'''
-    pass
-
-# Adiciona comparação entre expressões
-def p_expression_comparison(p):
-    '''expression : expression OP_EQ term
-                  | expression OP_GE term
-                  | expression OP_GT term
-                  | expression OP_LE term
-                  | expression OP_LT term
-                  | expression OP_NE term'''
-    pass
-
-def p_term(p):
-    '''term : term OP_MUL factor
-            | term OP_DIV factor
-            | factor'''
-    pass
-
-def p_factor(p):
-    '''factor : NUM_INT
-              | NUM_FLT
-              | ID
-              | SMB_OPA expression SMB_CPA'''
-    pass
-
+# Regra para vazio (empty)
 def p_empty(p):
-    '''empty :'''
-    pass
+    "empty :"
+    p[0] = None
 
-# Função de erro
 def p_error(p):
     if p:
-        print(f"Erro de sintaxe em '{p.value}' na linha {p.lineno}")
-        parser.errok()
-    else:
-        print("Erro de sintaxe no final da entrada")
+        # Erro de ponto e vírgula ausente
+        if p.type in {'ID', 'IF', 'WHILE', 'BEGIN', 'NUM_INT', 'NUM_REAL'}:
+            print(f"Erro de sintaxe: falta de ponto e vírgula (';') no final da linha {p.lineno - 1}")
 
-# Constrói o parser
+        # Erro para estruturas de controle incompletas
+        elif p.type == 'THEN':
+            print(f"Erro de sintaxe: 'THEN' sem condição 'IF' na linha {p.lineno}")
+        elif p.type == 'DO':
+            print(f"Erro de sintaxe: 'DO' sem condição 'WHILE' na linha {p.lineno}")
+        elif p.type == 'END':
+            print(f"Erro de sintaxe: 'END' sem correspondente 'BEGIN' na linha {p.lineno}")
+        elif p.type == 'ELSE':
+            print(f"Erro de sintaxe: 'ELSE' sem 'IF' na linha {p.lineno}")
+
+        # Erro de fechamento de parênteses ou blocos
+        elif p.type == 'RPAREN':
+            print(f"Erro de sintaxe: parêntese de fechamento ')' sem correspondente '(' na linha {p.lineno}")
+        elif p.type == 'LPAREN':
+            print(f"Erro de sintaxe: parêntese de abertura '(' não fechado na linha {p.lineno}")
+
+        # Qualquer outro erro
+        else:
+            print(f"Erro de sintaxe no token '{p.value}', linha {p.lineno}")
+    else:
+        # Caso o parser chegue ao final do arquivo e ainda espere por um token
+        print("Erro de sintaxe: final do arquivo inesperado")
+
+# Construção do parser
 parser = yacc.yacc()
 
-# nome do arquvio contendo o codigo em Micro Pascal
-nome_arquivo_entrada = 'codigo.txt'
-
-# ler o arquivo com o codigo
-with open(nome_arquivo_entrada, 'r') as arquivo:
-    codigo = arquivo.read()
-
-# Executa o parser
-parser.parse(codigo)
+# Função de parsing
+def parse(data):
+    result = parser.parse(data)
+    print("Parsing completed.")
+    return result

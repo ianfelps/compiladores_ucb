@@ -1,1438 +1,1108 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    SMB_CBC
-    SMB_OBC
-
 Grammar
 
-Rule 0     S' -> program
-Rule 1     program -> PROGRAM ID SMB_SEM var_declaration block DOT
-Rule 2     block -> BEGIN statement_list END
-Rule 3     var_declaration -> VAR var_list
-Rule 4     var_declaration -> empty
-Rule 5     var_list -> id_list COLON type SMB_SEM var_list
-Rule 6     var_list -> id_list COLON type SMB_SEM
-Rule 7     var_list -> empty
-Rule 8     id_list -> ID
-Rule 9     id_list -> ID SMB_COM id_list
-Rule 10    type -> INTEGER
-Rule 11    type -> REAL
-Rule 12    statement_list -> statement statement_list
-Rule 13    statement_list -> empty
-Rule 14    statement -> assignment SMB_SEM
-Rule 15    statement -> if_statement
-Rule 16    statement -> while_statement
-Rule 17    statement -> block SMB_SEM
-Rule 18    statement -> empty
-Rule 19    assignment -> ID OP_ASS expression
-Rule 20    if_statement -> IF expression THEN statement else_clause
-Rule 21    else_clause -> ELSE statement
-Rule 22    else_clause -> empty
-Rule 23    while_statement -> WHILE expression DO statement
-Rule 24    expression -> expression OP_AD term
-Rule 25    expression -> expression OP_MIN term
-Rule 26    expression -> term
-Rule 27    expression -> expression OP_EQ term
-Rule 28    expression -> expression OP_GE term
-Rule 29    expression -> expression OP_GT term
-Rule 30    expression -> expression OP_LE term
-Rule 31    expression -> expression OP_LT term
-Rule 32    expression -> expression OP_NE term
-Rule 33    term -> term OP_MUL factor
-Rule 34    term -> term OP_DIV factor
-Rule 35    term -> factor
-Rule 36    factor -> NUM_INT
-Rule 37    factor -> NUM_FLT
-Rule 38    factor -> ID
-Rule 39    factor -> SMB_OPA expression SMB_CPA
-Rule 40    empty -> <empty>
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAM ID SEMI bloco DOT
+Rule 2     bloco -> parte_declaracoes_variaveis comando_composto
+Rule 3     parte_declaracoes_variaveis -> VAR declaracao_variaveis_list SEMI
+Rule 4     parte_declaracoes_variaveis -> empty
+Rule 5     declaracao_variaveis_list -> declaracao_variaveis
+Rule 6     declaracao_variaveis_list -> declaracao_variaveis_list SEMI declaracao_variaveis
+Rule 7     declaracao_variaveis -> lista_identificadores COLON tipo
+Rule 8     lista_identificadores -> ID
+Rule 9     lista_identificadores -> lista_identificadores COMMA ID
+Rule 10    tipo -> INTEGER
+Rule 11    tipo -> REAL
+Rule 12    tipo -> BOOLEAN
+Rule 13    comando_composto -> BEGIN comando_list END
+Rule 14    comando_list -> comando
+Rule 15    comando_list -> comando_list SEMI comando
+Rule 16    comando -> atribuicao
+Rule 17    comando -> comando_composto
+Rule 18    comando -> comando_condicional
+Rule 19    comando -> comando_repetitivo
+Rule 20    atribuicao -> ID ASSIGN expressao
+Rule 21    comando_condicional -> IF expressao THEN comando
+Rule 22    comando_condicional -> IF expressao THEN comando ELSE comando
+Rule 23    comando_repetitivo -> WHILE expressao DO comando
+Rule 24    expressao -> expressao_simples
+Rule 25    expressao -> expressao_simples relacao expressao_simples
+Rule 26    relacao -> EQ
+Rule 27    relacao -> NE
+Rule 28    relacao -> LT
+Rule 29    relacao -> LE
+Rule 30    relacao -> GT
+Rule 31    relacao -> GE
+Rule 32    expressao_simples -> termo
+Rule 33    expressao_simples -> expressao_simples PLUS termo
+Rule 34    expressao_simples -> expressao_simples MINUS termo
+Rule 35    termo -> fator
+Rule 36    termo -> termo TIMES fator
+Rule 37    termo -> termo DIVIDE fator
+Rule 38    fator -> ID
+Rule 39    fator -> NUM_INT
+Rule 40    fator -> NUM_REAL
+Rule 41    fator -> LPAREN expressao RPAREN
+Rule 42    empty -> <empty>
 
 Terminals, with rules where they appear
 
-BEGIN                : 2
-COLON                : 5 6
+ASSIGN               : 20
+BEGIN                : 13
+BOOLEAN              : 12
+COLON                : 7
+COMMA                : 9
+DIVIDE               : 37
 DO                   : 23
 DOT                  : 1
-ELSE                 : 21
-END                  : 2
-ID                   : 1 8 9 19 38
-IF                   : 20
+ELSE                 : 22
+END                  : 13
+EQ                   : 26
+GE                   : 31
+GT                   : 30
+ID                   : 1 8 9 20 38
+IF                   : 21 22
 INTEGER              : 10
-NUM_FLT              : 37
-NUM_INT              : 36
-OP_AD                : 24
-OP_ASS               : 19
-OP_DIV               : 34
-OP_EQ                : 27
-OP_GE                : 28
-OP_GT                : 29
-OP_LE                : 30
-OP_LT                : 31
-OP_MIN               : 25
-OP_MUL               : 33
-OP_NE                : 32
+LE                   : 29
+LPAREN               : 41
+LT                   : 28
+MINUS                : 34
+NE                   : 27
+NUM_INT              : 39
+NUM_REAL             : 40
+PLUS                 : 33
 PROGRAM              : 1
 REAL                 : 11
-SMB_CBC              : 
-SMB_COM              : 9
-SMB_CPA              : 39
-SMB_OBC              : 
-SMB_OPA              : 39
-SMB_SEM              : 1 5 6 14 17
-THEN                 : 20
+RPAREN               : 41
+SEMI                 : 1 3 6 15
+THEN                 : 21 22
+TIMES                : 36
 VAR                  : 3
 WHILE                : 23
 error                : 
 
 Nonterminals, with rules where they appear
 
-assignment           : 14
-block                : 1 17
-else_clause          : 20
-empty                : 4 7 13 18 22
-expression           : 19 20 23 24 25 27 28 29 30 31 32 39
-factor               : 33 34 35
-id_list              : 5 6 9
-if_statement         : 15
-program              : 0
-statement            : 12 20 21 23
-statement_list       : 2 12
-term                 : 24 25 26 27 28 29 30 31 32 33 34
-type                 : 5 6
-var_declaration      : 1
-var_list             : 3 5
-while_statement      : 16
+atribuicao           : 16
+bloco                : 1
+comando              : 14 15 21 22 22 23
+comando_composto     : 2 17
+comando_condicional  : 18
+comando_list         : 13 15
+comando_repetitivo   : 19
+declaracao_variaveis : 5 6
+declaracao_variaveis_list : 3 6
+empty                : 4
+expressao            : 20 21 22 23 41
+expressao_simples    : 24 25 25 33 34
+fator                : 35 36 37
+lista_identificadores : 7 9
+parte_declaracoes_variaveis : 2
+programa             : 0
+relacao              : 25
+termo                : 32 33 34 36 37
+tipo                 : 7
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . program
-    (1) program -> . PROGRAM ID SMB_SEM var_declaration block DOT
+    (0) S' -> . programa
+    (1) programa -> . PROGRAM ID SEMI bloco DOT
 
     PROGRAM         shift and go to state 2
 
-    program                        shift and go to state 1
+    programa                       shift and go to state 1
 
 state 1
 
-    (0) S' -> program .
+    (0) S' -> programa .
 
 
 
 state 2
 
-    (1) program -> PROGRAM . ID SMB_SEM var_declaration block DOT
+    (1) programa -> PROGRAM . ID SEMI bloco DOT
 
     ID              shift and go to state 3
 
 
 state 3
 
-    (1) program -> PROGRAM ID . SMB_SEM var_declaration block DOT
+    (1) programa -> PROGRAM ID . SEMI bloco DOT
 
-    SMB_SEM         shift and go to state 4
+    SEMI            shift and go to state 4
 
 
 state 4
 
-    (1) program -> PROGRAM ID SMB_SEM . var_declaration block DOT
-    (3) var_declaration -> . VAR var_list
-    (4) var_declaration -> . empty
-    (40) empty -> .
+    (1) programa -> PROGRAM ID SEMI . bloco DOT
+    (2) bloco -> . parte_declaracoes_variaveis comando_composto
+    (3) parte_declaracoes_variaveis -> . VAR declaracao_variaveis_list SEMI
+    (4) parte_declaracoes_variaveis -> . empty
+    (42) empty -> .
 
-    VAR             shift and go to state 6
-    BEGIN           reduce using rule 40 (empty -> .)
+    VAR             shift and go to state 7
+    BEGIN           reduce using rule 42 (empty -> .)
 
-    var_declaration                shift and go to state 5
-    empty                          shift and go to state 7
+    bloco                          shift and go to state 5
+    parte_declaracoes_variaveis    shift and go to state 6
+    empty                          shift and go to state 8
 
 state 5
 
-    (1) program -> PROGRAM ID SMB_SEM var_declaration . block DOT
-    (2) block -> . BEGIN statement_list END
+    (1) programa -> PROGRAM ID SEMI bloco . DOT
 
-    BEGIN           shift and go to state 9
+    DOT             shift and go to state 9
 
-    block                          shift and go to state 8
 
 state 6
 
-    (3) var_declaration -> VAR . var_list
-    (5) var_list -> . id_list COLON type SMB_SEM var_list
-    (6) var_list -> . id_list COLON type SMB_SEM
-    (7) var_list -> . empty
-    (8) id_list -> . ID
-    (9) id_list -> . ID SMB_COM id_list
-    (40) empty -> .
+    (2) bloco -> parte_declaracoes_variaveis . comando_composto
+    (13) comando_composto -> . BEGIN comando_list END
 
-    ID              shift and go to state 13
-    BEGIN           reduce using rule 40 (empty -> .)
+    BEGIN           shift and go to state 11
 
-    var_list                       shift and go to state 10
-    id_list                        shift and go to state 11
-    empty                          shift and go to state 12
+    comando_composto               shift and go to state 10
 
 state 7
 
-    (4) var_declaration -> empty .
+    (3) parte_declaracoes_variaveis -> VAR . declaracao_variaveis_list SEMI
+    (5) declaracao_variaveis_list -> . declaracao_variaveis
+    (6) declaracao_variaveis_list -> . declaracao_variaveis_list SEMI declaracao_variaveis
+    (7) declaracao_variaveis -> . lista_identificadores COLON tipo
+    (8) lista_identificadores -> . ID
+    (9) lista_identificadores -> . lista_identificadores COMMA ID
 
-    BEGIN           reduce using rule 4 (var_declaration -> empty .)
+    ID              shift and go to state 15
 
+    declaracao_variaveis_list      shift and go to state 12
+    declaracao_variaveis           shift and go to state 13
+    lista_identificadores          shift and go to state 14
 
 state 8
 
-    (1) program -> PROGRAM ID SMB_SEM var_declaration block . DOT
+    (4) parte_declaracoes_variaveis -> empty .
 
-    DOT             shift and go to state 14
+    BEGIN           reduce using rule 4 (parte_declaracoes_variaveis -> empty .)
 
 
 state 9
 
-    (2) block -> BEGIN . statement_list END
-    (12) statement_list -> . statement statement_list
-    (13) statement_list -> . empty
-    (14) statement -> . assignment SMB_SEM
-    (15) statement -> . if_statement
-    (16) statement -> . while_statement
-    (17) statement -> . block SMB_SEM
-    (18) statement -> . empty
-    (40) empty -> .
-    (19) assignment -> . ID OP_ASS expression
-    (20) if_statement -> . IF expression THEN statement else_clause
-    (23) while_statement -> . WHILE expression DO statement
-    (2) block -> . BEGIN statement_list END
+    (1) programa -> PROGRAM ID SEMI bloco DOT .
 
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for BEGIN resolved as shift
-    END             reduce using rule 40 (empty -> .)
-    ID              shift and go to state 22
-    IF              shift and go to state 23
-    WHILE           shift and go to state 24
-    BEGIN           shift and go to state 9
+    $end            reduce using rule 1 (programa -> PROGRAM ID SEMI bloco DOT .)
 
-  ! ID              [ reduce using rule 40 (empty -> .) ]
-  ! IF              [ reduce using rule 40 (empty -> .) ]
-  ! WHILE           [ reduce using rule 40 (empty -> .) ]
-  ! BEGIN           [ reduce using rule 40 (empty -> .) ]
-
-    statement_list                 shift and go to state 15
-    statement                      shift and go to state 16
-    empty                          shift and go to state 17
-    assignment                     shift and go to state 18
-    if_statement                   shift and go to state 19
-    while_statement                shift and go to state 20
-    block                          shift and go to state 21
 
 state 10
 
-    (3) var_declaration -> VAR var_list .
+    (2) bloco -> parte_declaracoes_variaveis comando_composto .
 
-    BEGIN           reduce using rule 3 (var_declaration -> VAR var_list .)
+    DOT             reduce using rule 2 (bloco -> parte_declaracoes_variaveis comando_composto .)
 
 
 state 11
 
-    (5) var_list -> id_list . COLON type SMB_SEM var_list
-    (6) var_list -> id_list . COLON type SMB_SEM
+    (13) comando_composto -> BEGIN . comando_list END
+    (14) comando_list -> . comando
+    (15) comando_list -> . comando_list SEMI comando
+    (16) comando -> . atribuicao
+    (17) comando -> . comando_composto
+    (18) comando -> . comando_condicional
+    (19) comando -> . comando_repetitivo
+    (20) atribuicao -> . ID ASSIGN expressao
+    (13) comando_composto -> . BEGIN comando_list END
+    (21) comando_condicional -> . IF expressao THEN comando
+    (22) comando_condicional -> . IF expressao THEN comando ELSE comando
+    (23) comando_repetitivo -> . WHILE expressao DO comando
 
-    COLON           shift and go to state 25
+    ID              shift and go to state 22
+    BEGIN           shift and go to state 11
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
 
+    comando_list                   shift and go to state 16
+    comando                        shift and go to state 17
+    atribuicao                     shift and go to state 18
+    comando_composto               shift and go to state 19
+    comando_condicional            shift and go to state 20
+    comando_repetitivo             shift and go to state 21
 
 state 12
 
-    (7) var_list -> empty .
+    (3) parte_declaracoes_variaveis -> VAR declaracao_variaveis_list . SEMI
+    (6) declaracao_variaveis_list -> declaracao_variaveis_list . SEMI declaracao_variaveis
 
-    BEGIN           reduce using rule 7 (var_list -> empty .)
+    SEMI            shift and go to state 25
 
 
 state 13
 
-    (8) id_list -> ID .
-    (9) id_list -> ID . SMB_COM id_list
+    (5) declaracao_variaveis_list -> declaracao_variaveis .
 
-    COLON           reduce using rule 8 (id_list -> ID .)
-    SMB_COM         shift and go to state 26
+    SEMI            reduce using rule 5 (declaracao_variaveis_list -> declaracao_variaveis .)
 
 
 state 14
 
-    (1) program -> PROGRAM ID SMB_SEM var_declaration block DOT .
+    (7) declaracao_variaveis -> lista_identificadores . COLON tipo
+    (9) lista_identificadores -> lista_identificadores . COMMA ID
 
-    $end            reduce using rule 1 (program -> PROGRAM ID SMB_SEM var_declaration block DOT .)
+    COLON           shift and go to state 26
+    COMMA           shift and go to state 27
 
 
 state 15
 
-    (2) block -> BEGIN statement_list . END
+    (8) lista_identificadores -> ID .
 
-    END             shift and go to state 27
+    COLON           reduce using rule 8 (lista_identificadores -> ID .)
+    COMMA           reduce using rule 8 (lista_identificadores -> ID .)
 
 
 state 16
 
-    (12) statement_list -> statement . statement_list
-    (12) statement_list -> . statement statement_list
-    (13) statement_list -> . empty
-    (14) statement -> . assignment SMB_SEM
-    (15) statement -> . if_statement
-    (16) statement -> . while_statement
-    (17) statement -> . block SMB_SEM
-    (18) statement -> . empty
-    (40) empty -> .
-    (19) assignment -> . ID OP_ASS expression
-    (20) if_statement -> . IF expression THEN statement else_clause
-    (23) while_statement -> . WHILE expression DO statement
-    (2) block -> . BEGIN statement_list END
+    (13) comando_composto -> BEGIN comando_list . END
+    (15) comando_list -> comando_list . SEMI comando
 
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for BEGIN resolved as shift
-    END             reduce using rule 40 (empty -> .)
-    ID              shift and go to state 22
-    IF              shift and go to state 23
-    WHILE           shift and go to state 24
-    BEGIN           shift and go to state 9
+    END             shift and go to state 28
+    SEMI            shift and go to state 29
 
-  ! ID              [ reduce using rule 40 (empty -> .) ]
-  ! IF              [ reduce using rule 40 (empty -> .) ]
-  ! WHILE           [ reduce using rule 40 (empty -> .) ]
-  ! BEGIN           [ reduce using rule 40 (empty -> .) ]
-
-    statement                      shift and go to state 16
-    statement_list                 shift and go to state 28
-    empty                          shift and go to state 17
-    assignment                     shift and go to state 18
-    if_statement                   shift and go to state 19
-    while_statement                shift and go to state 20
-    block                          shift and go to state 21
 
 state 17
 
-    (13) statement_list -> empty .
-    (18) statement -> empty .
+    (14) comando_list -> comando .
 
-  ! reduce/reduce conflict for END resolved using rule 13 (statement_list -> empty .)
-    END             reduce using rule 13 (statement_list -> empty .)
-    ID              reduce using rule 18 (statement -> empty .)
-    IF              reduce using rule 18 (statement -> empty .)
-    WHILE           reduce using rule 18 (statement -> empty .)
-    BEGIN           reduce using rule 18 (statement -> empty .)
-
-  ! END             [ reduce using rule 18 (statement -> empty .) ]
+    END             reduce using rule 14 (comando_list -> comando .)
+    SEMI            reduce using rule 14 (comando_list -> comando .)
 
 
 state 18
 
-    (14) statement -> assignment . SMB_SEM
+    (16) comando -> atribuicao .
 
-    SMB_SEM         shift and go to state 29
+    END             reduce using rule 16 (comando -> atribuicao .)
+    SEMI            reduce using rule 16 (comando -> atribuicao .)
+    ELSE            reduce using rule 16 (comando -> atribuicao .)
 
 
 state 19
 
-    (15) statement -> if_statement .
+    (17) comando -> comando_composto .
 
-    ID              reduce using rule 15 (statement -> if_statement .)
-    IF              reduce using rule 15 (statement -> if_statement .)
-    WHILE           reduce using rule 15 (statement -> if_statement .)
-    BEGIN           reduce using rule 15 (statement -> if_statement .)
-    END             reduce using rule 15 (statement -> if_statement .)
-    ELSE            reduce using rule 15 (statement -> if_statement .)
+    END             reduce using rule 17 (comando -> comando_composto .)
+    SEMI            reduce using rule 17 (comando -> comando_composto .)
+    ELSE            reduce using rule 17 (comando -> comando_composto .)
 
 
 state 20
 
-    (16) statement -> while_statement .
+    (18) comando -> comando_condicional .
 
-    ID              reduce using rule 16 (statement -> while_statement .)
-    IF              reduce using rule 16 (statement -> while_statement .)
-    WHILE           reduce using rule 16 (statement -> while_statement .)
-    BEGIN           reduce using rule 16 (statement -> while_statement .)
-    END             reduce using rule 16 (statement -> while_statement .)
-    ELSE            reduce using rule 16 (statement -> while_statement .)
+    END             reduce using rule 18 (comando -> comando_condicional .)
+    SEMI            reduce using rule 18 (comando -> comando_condicional .)
+    ELSE            reduce using rule 18 (comando -> comando_condicional .)
 
 
 state 21
 
-    (17) statement -> block . SMB_SEM
+    (19) comando -> comando_repetitivo .
 
-    SMB_SEM         shift and go to state 30
+    END             reduce using rule 19 (comando -> comando_repetitivo .)
+    SEMI            reduce using rule 19 (comando -> comando_repetitivo .)
+    ELSE            reduce using rule 19 (comando -> comando_repetitivo .)
 
 
 state 22
 
-    (19) assignment -> ID . OP_ASS expression
+    (20) atribuicao -> ID . ASSIGN expressao
 
-    OP_ASS          shift and go to state 31
+    ASSIGN          shift and go to state 30
 
 
 state 23
 
-    (20) if_statement -> IF . expression THEN statement else_clause
-    (24) expression -> . expression OP_AD term
-    (25) expression -> . expression OP_MIN term
-    (26) expression -> . term
-    (27) expression -> . expression OP_EQ term
-    (28) expression -> . expression OP_GE term
-    (29) expression -> . expression OP_GT term
-    (30) expression -> . expression OP_LE term
-    (31) expression -> . expression OP_LT term
-    (32) expression -> . expression OP_NE term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (21) comando_condicional -> IF . expressao THEN comando
+    (22) comando_condicional -> IF . expressao THEN comando ELSE comando
+    (24) expressao -> . expressao_simples
+    (25) expressao -> . expressao_simples relacao expressao_simples
+    (32) expressao_simples -> . termo
+    (33) expressao_simples -> . expressao_simples PLUS termo
+    (34) expressao_simples -> . expressao_simples MINUS termo
+    (35) termo -> . fator
+    (36) termo -> . termo TIMES fator
+    (37) termo -> . termo DIVIDE fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-    expression                     shift and go to state 32
-    term                           shift and go to state 33
-    factor                         shift and go to state 34
+    expressao                      shift and go to state 31
+    expressao_simples              shift and go to state 32
+    termo                          shift and go to state 33
+    fator                          shift and go to state 34
 
 state 24
 
-    (23) while_statement -> WHILE . expression DO statement
-    (24) expression -> . expression OP_AD term
-    (25) expression -> . expression OP_MIN term
-    (26) expression -> . term
-    (27) expression -> . expression OP_EQ term
-    (28) expression -> . expression OP_GE term
-    (29) expression -> . expression OP_GT term
-    (30) expression -> . expression OP_LE term
-    (31) expression -> . expression OP_LT term
-    (32) expression -> . expression OP_NE term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (23) comando_repetitivo -> WHILE . expressao DO comando
+    (24) expressao -> . expressao_simples
+    (25) expressao -> . expressao_simples relacao expressao_simples
+    (32) expressao_simples -> . termo
+    (33) expressao_simples -> . expressao_simples PLUS termo
+    (34) expressao_simples -> . expressao_simples MINUS termo
+    (35) termo -> . fator
+    (36) termo -> . termo TIMES fator
+    (37) termo -> . termo DIVIDE fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-    expression                     shift and go to state 39
-    term                           shift and go to state 33
-    factor                         shift and go to state 34
+    expressao                      shift and go to state 39
+    expressao_simples              shift and go to state 32
+    termo                          shift and go to state 33
+    fator                          shift and go to state 34
 
 state 25
 
-    (5) var_list -> id_list COLON . type SMB_SEM var_list
-    (6) var_list -> id_list COLON . type SMB_SEM
-    (10) type -> . INTEGER
-    (11) type -> . REAL
+    (3) parte_declaracoes_variaveis -> VAR declaracao_variaveis_list SEMI .
+    (6) declaracao_variaveis_list -> declaracao_variaveis_list SEMI . declaracao_variaveis
+    (7) declaracao_variaveis -> . lista_identificadores COLON tipo
+    (8) lista_identificadores -> . ID
+    (9) lista_identificadores -> . lista_identificadores COMMA ID
 
-    INTEGER         shift and go to state 41
-    REAL            shift and go to state 42
+    BEGIN           reduce using rule 3 (parte_declaracoes_variaveis -> VAR declaracao_variaveis_list SEMI .)
+    ID              shift and go to state 15
 
-    type                           shift and go to state 40
+    declaracao_variaveis           shift and go to state 40
+    lista_identificadores          shift and go to state 14
 
 state 26
 
-    (9) id_list -> ID SMB_COM . id_list
-    (8) id_list -> . ID
-    (9) id_list -> . ID SMB_COM id_list
+    (7) declaracao_variaveis -> lista_identificadores COLON . tipo
+    (10) tipo -> . INTEGER
+    (11) tipo -> . REAL
+    (12) tipo -> . BOOLEAN
 
-    ID              shift and go to state 13
+    INTEGER         shift and go to state 42
+    REAL            shift and go to state 43
+    BOOLEAN         shift and go to state 44
 
-    id_list                        shift and go to state 43
+    tipo                           shift and go to state 41
 
 state 27
 
-    (2) block -> BEGIN statement_list END .
+    (9) lista_identificadores -> lista_identificadores COMMA . ID
 
-    DOT             reduce using rule 2 (block -> BEGIN statement_list END .)
-    SMB_SEM         reduce using rule 2 (block -> BEGIN statement_list END .)
+    ID              shift and go to state 45
 
 
 state 28
 
-    (12) statement_list -> statement statement_list .
+    (13) comando_composto -> BEGIN comando_list END .
 
-    END             reduce using rule 12 (statement_list -> statement statement_list .)
+    DOT             reduce using rule 13 (comando_composto -> BEGIN comando_list END .)
+    END             reduce using rule 13 (comando_composto -> BEGIN comando_list END .)
+    SEMI            reduce using rule 13 (comando_composto -> BEGIN comando_list END .)
+    ELSE            reduce using rule 13 (comando_composto -> BEGIN comando_list END .)
 
 
 state 29
 
-    (14) statement -> assignment SMB_SEM .
+    (15) comando_list -> comando_list SEMI . comando
+    (16) comando -> . atribuicao
+    (17) comando -> . comando_composto
+    (18) comando -> . comando_condicional
+    (19) comando -> . comando_repetitivo
+    (20) atribuicao -> . ID ASSIGN expressao
+    (13) comando_composto -> . BEGIN comando_list END
+    (21) comando_condicional -> . IF expressao THEN comando
+    (22) comando_condicional -> . IF expressao THEN comando ELSE comando
+    (23) comando_repetitivo -> . WHILE expressao DO comando
 
-    ID              reduce using rule 14 (statement -> assignment SMB_SEM .)
-    IF              reduce using rule 14 (statement -> assignment SMB_SEM .)
-    WHILE           reduce using rule 14 (statement -> assignment SMB_SEM .)
-    BEGIN           reduce using rule 14 (statement -> assignment SMB_SEM .)
-    END             reduce using rule 14 (statement -> assignment SMB_SEM .)
-    ELSE            reduce using rule 14 (statement -> assignment SMB_SEM .)
+    ID              shift and go to state 22
+    BEGIN           shift and go to state 11
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
 
+    comando                        shift and go to state 46
+    atribuicao                     shift and go to state 18
+    comando_composto               shift and go to state 19
+    comando_condicional            shift and go to state 20
+    comando_repetitivo             shift and go to state 21
 
 state 30
 
-    (17) statement -> block SMB_SEM .
+    (20) atribuicao -> ID ASSIGN . expressao
+    (24) expressao -> . expressao_simples
+    (25) expressao -> . expressao_simples relacao expressao_simples
+    (32) expressao_simples -> . termo
+    (33) expressao_simples -> . expressao_simples PLUS termo
+    (34) expressao_simples -> . expressao_simples MINUS termo
+    (35) termo -> . fator
+    (36) termo -> . termo TIMES fator
+    (37) termo -> . termo DIVIDE fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-    ID              reduce using rule 17 (statement -> block SMB_SEM .)
-    IF              reduce using rule 17 (statement -> block SMB_SEM .)
-    WHILE           reduce using rule 17 (statement -> block SMB_SEM .)
-    BEGIN           reduce using rule 17 (statement -> block SMB_SEM .)
-    END             reduce using rule 17 (statement -> block SMB_SEM .)
-    ELSE            reduce using rule 17 (statement -> block SMB_SEM .)
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
+    expressao                      shift and go to state 47
+    expressao_simples              shift and go to state 32
+    termo                          shift and go to state 33
+    fator                          shift and go to state 34
 
 state 31
 
-    (19) assignment -> ID OP_ASS . expression
-    (24) expression -> . expression OP_AD term
-    (25) expression -> . expression OP_MIN term
-    (26) expression -> . term
-    (27) expression -> . expression OP_EQ term
-    (28) expression -> . expression OP_GE term
-    (29) expression -> . expression OP_GT term
-    (30) expression -> . expression OP_LE term
-    (31) expression -> . expression OP_LT term
-    (32) expression -> . expression OP_NE term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (21) comando_condicional -> IF expressao . THEN comando
+    (22) comando_condicional -> IF expressao . THEN comando ELSE comando
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    THEN            shift and go to state 48
 
-    expression                     shift and go to state 44
-    term                           shift and go to state 33
-    factor                         shift and go to state 34
 
 state 32
 
-    (20) if_statement -> IF expression . THEN statement else_clause
-    (24) expression -> expression . OP_AD term
-    (25) expression -> expression . OP_MIN term
-    (27) expression -> expression . OP_EQ term
-    (28) expression -> expression . OP_GE term
-    (29) expression -> expression . OP_GT term
-    (30) expression -> expression . OP_LE term
-    (31) expression -> expression . OP_LT term
-    (32) expression -> expression . OP_NE term
+    (24) expressao -> expressao_simples .
+    (25) expressao -> expressao_simples . relacao expressao_simples
+    (33) expressao_simples -> expressao_simples . PLUS termo
+    (34) expressao_simples -> expressao_simples . MINUS termo
+    (26) relacao -> . EQ
+    (27) relacao -> . NE
+    (28) relacao -> . LT
+    (29) relacao -> . LE
+    (30) relacao -> . GT
+    (31) relacao -> . GE
 
-    THEN            shift and go to state 45
-    OP_AD           shift and go to state 46
-    OP_MIN          shift and go to state 47
-    OP_EQ           shift and go to state 48
-    OP_GE           shift and go to state 49
-    OP_GT           shift and go to state 50
-    OP_LE           shift and go to state 51
-    OP_LT           shift and go to state 52
-    OP_NE           shift and go to state 53
+    THEN            reduce using rule 24 (expressao -> expressao_simples .)
+    DO              reduce using rule 24 (expressao -> expressao_simples .)
+    END             reduce using rule 24 (expressao -> expressao_simples .)
+    SEMI            reduce using rule 24 (expressao -> expressao_simples .)
+    ELSE            reduce using rule 24 (expressao -> expressao_simples .)
+    RPAREN          reduce using rule 24 (expressao -> expressao_simples .)
+    PLUS            shift and go to state 50
+    MINUS           shift and go to state 51
+    EQ              shift and go to state 52
+    NE              shift and go to state 53
+    LT              shift and go to state 54
+    LE              shift and go to state 55
+    GT              shift and go to state 56
+    GE              shift and go to state 57
 
+    relacao                        shift and go to state 49
 
 state 33
 
-    (26) expression -> term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (32) expressao_simples -> termo .
+    (36) termo -> termo . TIMES fator
+    (37) termo -> termo . DIVIDE fator
 
-    THEN            reduce using rule 26 (expression -> term .)
-    OP_AD           reduce using rule 26 (expression -> term .)
-    OP_MIN          reduce using rule 26 (expression -> term .)
-    OP_EQ           reduce using rule 26 (expression -> term .)
-    OP_GE           reduce using rule 26 (expression -> term .)
-    OP_GT           reduce using rule 26 (expression -> term .)
-    OP_LE           reduce using rule 26 (expression -> term .)
-    OP_LT           reduce using rule 26 (expression -> term .)
-    OP_NE           reduce using rule 26 (expression -> term .)
-    DO              reduce using rule 26 (expression -> term .)
-    SMB_SEM         reduce using rule 26 (expression -> term .)
-    SMB_CPA         reduce using rule 26 (expression -> term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    PLUS            reduce using rule 32 (expressao_simples -> termo .)
+    MINUS           reduce using rule 32 (expressao_simples -> termo .)
+    EQ              reduce using rule 32 (expressao_simples -> termo .)
+    NE              reduce using rule 32 (expressao_simples -> termo .)
+    LT              reduce using rule 32 (expressao_simples -> termo .)
+    LE              reduce using rule 32 (expressao_simples -> termo .)
+    GT              reduce using rule 32 (expressao_simples -> termo .)
+    GE              reduce using rule 32 (expressao_simples -> termo .)
+    THEN            reduce using rule 32 (expressao_simples -> termo .)
+    DO              reduce using rule 32 (expressao_simples -> termo .)
+    END             reduce using rule 32 (expressao_simples -> termo .)
+    SEMI            reduce using rule 32 (expressao_simples -> termo .)
+    ELSE            reduce using rule 32 (expressao_simples -> termo .)
+    RPAREN          reduce using rule 32 (expressao_simples -> termo .)
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
 
 
 state 34
 
-    (35) term -> factor .
+    (35) termo -> fator .
 
-    OP_MUL          reduce using rule 35 (term -> factor .)
-    OP_DIV          reduce using rule 35 (term -> factor .)
-    THEN            reduce using rule 35 (term -> factor .)
-    OP_AD           reduce using rule 35 (term -> factor .)
-    OP_MIN          reduce using rule 35 (term -> factor .)
-    OP_EQ           reduce using rule 35 (term -> factor .)
-    OP_GE           reduce using rule 35 (term -> factor .)
-    OP_GT           reduce using rule 35 (term -> factor .)
-    OP_LE           reduce using rule 35 (term -> factor .)
-    OP_LT           reduce using rule 35 (term -> factor .)
-    OP_NE           reduce using rule 35 (term -> factor .)
-    DO              reduce using rule 35 (term -> factor .)
-    SMB_SEM         reduce using rule 35 (term -> factor .)
-    SMB_CPA         reduce using rule 35 (term -> factor .)
+    TIMES           reduce using rule 35 (termo -> fator .)
+    DIVIDE          reduce using rule 35 (termo -> fator .)
+    PLUS            reduce using rule 35 (termo -> fator .)
+    MINUS           reduce using rule 35 (termo -> fator .)
+    EQ              reduce using rule 35 (termo -> fator .)
+    NE              reduce using rule 35 (termo -> fator .)
+    LT              reduce using rule 35 (termo -> fator .)
+    LE              reduce using rule 35 (termo -> fator .)
+    GT              reduce using rule 35 (termo -> fator .)
+    GE              reduce using rule 35 (termo -> fator .)
+    THEN            reduce using rule 35 (termo -> fator .)
+    DO              reduce using rule 35 (termo -> fator .)
+    END             reduce using rule 35 (termo -> fator .)
+    SEMI            reduce using rule 35 (termo -> fator .)
+    ELSE            reduce using rule 35 (termo -> fator .)
+    RPAREN          reduce using rule 35 (termo -> fator .)
 
 
 state 35
 
-    (36) factor -> NUM_INT .
+    (38) fator -> ID .
 
-    OP_MUL          reduce using rule 36 (factor -> NUM_INT .)
-    OP_DIV          reduce using rule 36 (factor -> NUM_INT .)
-    THEN            reduce using rule 36 (factor -> NUM_INT .)
-    OP_AD           reduce using rule 36 (factor -> NUM_INT .)
-    OP_MIN          reduce using rule 36 (factor -> NUM_INT .)
-    OP_EQ           reduce using rule 36 (factor -> NUM_INT .)
-    OP_GE           reduce using rule 36 (factor -> NUM_INT .)
-    OP_GT           reduce using rule 36 (factor -> NUM_INT .)
-    OP_LE           reduce using rule 36 (factor -> NUM_INT .)
-    OP_LT           reduce using rule 36 (factor -> NUM_INT .)
-    OP_NE           reduce using rule 36 (factor -> NUM_INT .)
-    DO              reduce using rule 36 (factor -> NUM_INT .)
-    SMB_SEM         reduce using rule 36 (factor -> NUM_INT .)
-    SMB_CPA         reduce using rule 36 (factor -> NUM_INT .)
+    TIMES           reduce using rule 38 (fator -> ID .)
+    DIVIDE          reduce using rule 38 (fator -> ID .)
+    PLUS            reduce using rule 38 (fator -> ID .)
+    MINUS           reduce using rule 38 (fator -> ID .)
+    EQ              reduce using rule 38 (fator -> ID .)
+    NE              reduce using rule 38 (fator -> ID .)
+    LT              reduce using rule 38 (fator -> ID .)
+    LE              reduce using rule 38 (fator -> ID .)
+    GT              reduce using rule 38 (fator -> ID .)
+    GE              reduce using rule 38 (fator -> ID .)
+    THEN            reduce using rule 38 (fator -> ID .)
+    DO              reduce using rule 38 (fator -> ID .)
+    END             reduce using rule 38 (fator -> ID .)
+    SEMI            reduce using rule 38 (fator -> ID .)
+    ELSE            reduce using rule 38 (fator -> ID .)
+    RPAREN          reduce using rule 38 (fator -> ID .)
 
 
 state 36
 
-    (37) factor -> NUM_FLT .
+    (39) fator -> NUM_INT .
 
-    OP_MUL          reduce using rule 37 (factor -> NUM_FLT .)
-    OP_DIV          reduce using rule 37 (factor -> NUM_FLT .)
-    THEN            reduce using rule 37 (factor -> NUM_FLT .)
-    OP_AD           reduce using rule 37 (factor -> NUM_FLT .)
-    OP_MIN          reduce using rule 37 (factor -> NUM_FLT .)
-    OP_EQ           reduce using rule 37 (factor -> NUM_FLT .)
-    OP_GE           reduce using rule 37 (factor -> NUM_FLT .)
-    OP_GT           reduce using rule 37 (factor -> NUM_FLT .)
-    OP_LE           reduce using rule 37 (factor -> NUM_FLT .)
-    OP_LT           reduce using rule 37 (factor -> NUM_FLT .)
-    OP_NE           reduce using rule 37 (factor -> NUM_FLT .)
-    DO              reduce using rule 37 (factor -> NUM_FLT .)
-    SMB_SEM         reduce using rule 37 (factor -> NUM_FLT .)
-    SMB_CPA         reduce using rule 37 (factor -> NUM_FLT .)
+    TIMES           reduce using rule 39 (fator -> NUM_INT .)
+    DIVIDE          reduce using rule 39 (fator -> NUM_INT .)
+    PLUS            reduce using rule 39 (fator -> NUM_INT .)
+    MINUS           reduce using rule 39 (fator -> NUM_INT .)
+    EQ              reduce using rule 39 (fator -> NUM_INT .)
+    NE              reduce using rule 39 (fator -> NUM_INT .)
+    LT              reduce using rule 39 (fator -> NUM_INT .)
+    LE              reduce using rule 39 (fator -> NUM_INT .)
+    GT              reduce using rule 39 (fator -> NUM_INT .)
+    GE              reduce using rule 39 (fator -> NUM_INT .)
+    THEN            reduce using rule 39 (fator -> NUM_INT .)
+    DO              reduce using rule 39 (fator -> NUM_INT .)
+    END             reduce using rule 39 (fator -> NUM_INT .)
+    SEMI            reduce using rule 39 (fator -> NUM_INT .)
+    ELSE            reduce using rule 39 (fator -> NUM_INT .)
+    RPAREN          reduce using rule 39 (fator -> NUM_INT .)
 
 
 state 37
 
-    (38) factor -> ID .
+    (40) fator -> NUM_REAL .
 
-    OP_MUL          reduce using rule 38 (factor -> ID .)
-    OP_DIV          reduce using rule 38 (factor -> ID .)
-    THEN            reduce using rule 38 (factor -> ID .)
-    OP_AD           reduce using rule 38 (factor -> ID .)
-    OP_MIN          reduce using rule 38 (factor -> ID .)
-    OP_EQ           reduce using rule 38 (factor -> ID .)
-    OP_GE           reduce using rule 38 (factor -> ID .)
-    OP_GT           reduce using rule 38 (factor -> ID .)
-    OP_LE           reduce using rule 38 (factor -> ID .)
-    OP_LT           reduce using rule 38 (factor -> ID .)
-    OP_NE           reduce using rule 38 (factor -> ID .)
-    DO              reduce using rule 38 (factor -> ID .)
-    SMB_SEM         reduce using rule 38 (factor -> ID .)
-    SMB_CPA         reduce using rule 38 (factor -> ID .)
+    TIMES           reduce using rule 40 (fator -> NUM_REAL .)
+    DIVIDE          reduce using rule 40 (fator -> NUM_REAL .)
+    PLUS            reduce using rule 40 (fator -> NUM_REAL .)
+    MINUS           reduce using rule 40 (fator -> NUM_REAL .)
+    EQ              reduce using rule 40 (fator -> NUM_REAL .)
+    NE              reduce using rule 40 (fator -> NUM_REAL .)
+    LT              reduce using rule 40 (fator -> NUM_REAL .)
+    LE              reduce using rule 40 (fator -> NUM_REAL .)
+    GT              reduce using rule 40 (fator -> NUM_REAL .)
+    GE              reduce using rule 40 (fator -> NUM_REAL .)
+    THEN            reduce using rule 40 (fator -> NUM_REAL .)
+    DO              reduce using rule 40 (fator -> NUM_REAL .)
+    END             reduce using rule 40 (fator -> NUM_REAL .)
+    SEMI            reduce using rule 40 (fator -> NUM_REAL .)
+    ELSE            reduce using rule 40 (fator -> NUM_REAL .)
+    RPAREN          reduce using rule 40 (fator -> NUM_REAL .)
 
 
 state 38
 
-    (39) factor -> SMB_OPA . expression SMB_CPA
-    (24) expression -> . expression OP_AD term
-    (25) expression -> . expression OP_MIN term
-    (26) expression -> . term
-    (27) expression -> . expression OP_EQ term
-    (28) expression -> . expression OP_GE term
-    (29) expression -> . expression OP_GT term
-    (30) expression -> . expression OP_LE term
-    (31) expression -> . expression OP_LT term
-    (32) expression -> . expression OP_NE term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (41) fator -> LPAREN . expressao RPAREN
+    (24) expressao -> . expressao_simples
+    (25) expressao -> . expressao_simples relacao expressao_simples
+    (32) expressao_simples -> . termo
+    (33) expressao_simples -> . expressao_simples PLUS termo
+    (34) expressao_simples -> . expressao_simples MINUS termo
+    (35) termo -> . fator
+    (36) termo -> . termo TIMES fator
+    (37) termo -> . termo DIVIDE fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-    expression                     shift and go to state 56
-    term                           shift and go to state 33
-    factor                         shift and go to state 34
+    expressao                      shift and go to state 60
+    expressao_simples              shift and go to state 32
+    termo                          shift and go to state 33
+    fator                          shift and go to state 34
 
 state 39
 
-    (23) while_statement -> WHILE expression . DO statement
-    (24) expression -> expression . OP_AD term
-    (25) expression -> expression . OP_MIN term
-    (27) expression -> expression . OP_EQ term
-    (28) expression -> expression . OP_GE term
-    (29) expression -> expression . OP_GT term
-    (30) expression -> expression . OP_LE term
-    (31) expression -> expression . OP_LT term
-    (32) expression -> expression . OP_NE term
+    (23) comando_repetitivo -> WHILE expressao . DO comando
 
-    DO              shift and go to state 57
-    OP_AD           shift and go to state 46
-    OP_MIN          shift and go to state 47
-    OP_EQ           shift and go to state 48
-    OP_GE           shift and go to state 49
-    OP_GT           shift and go to state 50
-    OP_LE           shift and go to state 51
-    OP_LT           shift and go to state 52
-    OP_NE           shift and go to state 53
+    DO              shift and go to state 61
 
 
 state 40
 
-    (5) var_list -> id_list COLON type . SMB_SEM var_list
-    (6) var_list -> id_list COLON type . SMB_SEM
+    (6) declaracao_variaveis_list -> declaracao_variaveis_list SEMI declaracao_variaveis .
 
-    SMB_SEM         shift and go to state 58
+    SEMI            reduce using rule 6 (declaracao_variaveis_list -> declaracao_variaveis_list SEMI declaracao_variaveis .)
 
 
 state 41
 
-    (10) type -> INTEGER .
+    (7) declaracao_variaveis -> lista_identificadores COLON tipo .
 
-    SMB_SEM         reduce using rule 10 (type -> INTEGER .)
+    SEMI            reduce using rule 7 (declaracao_variaveis -> lista_identificadores COLON tipo .)
 
 
 state 42
 
-    (11) type -> REAL .
+    (10) tipo -> INTEGER .
 
-    SMB_SEM         reduce using rule 11 (type -> REAL .)
+    SEMI            reduce using rule 10 (tipo -> INTEGER .)
 
 
 state 43
 
-    (9) id_list -> ID SMB_COM id_list .
+    (11) tipo -> REAL .
 
-    COLON           reduce using rule 9 (id_list -> ID SMB_COM id_list .)
+    SEMI            reduce using rule 11 (tipo -> REAL .)
 
 
 state 44
 
-    (19) assignment -> ID OP_ASS expression .
-    (24) expression -> expression . OP_AD term
-    (25) expression -> expression . OP_MIN term
-    (27) expression -> expression . OP_EQ term
-    (28) expression -> expression . OP_GE term
-    (29) expression -> expression . OP_GT term
-    (30) expression -> expression . OP_LE term
-    (31) expression -> expression . OP_LT term
-    (32) expression -> expression . OP_NE term
+    (12) tipo -> BOOLEAN .
 
-    SMB_SEM         reduce using rule 19 (assignment -> ID OP_ASS expression .)
-    OP_AD           shift and go to state 46
-    OP_MIN          shift and go to state 47
-    OP_EQ           shift and go to state 48
-    OP_GE           shift and go to state 49
-    OP_GT           shift and go to state 50
-    OP_LE           shift and go to state 51
-    OP_LT           shift and go to state 52
-    OP_NE           shift and go to state 53
+    SEMI            reduce using rule 12 (tipo -> BOOLEAN .)
 
 
 state 45
 
-    (20) if_statement -> IF expression THEN . statement else_clause
-    (14) statement -> . assignment SMB_SEM
-    (15) statement -> . if_statement
-    (16) statement -> . while_statement
-    (17) statement -> . block SMB_SEM
-    (18) statement -> . empty
-    (19) assignment -> . ID OP_ASS expression
-    (20) if_statement -> . IF expression THEN statement else_clause
-    (23) while_statement -> . WHILE expression DO statement
-    (2) block -> . BEGIN statement_list END
-    (40) empty -> .
+    (9) lista_identificadores -> lista_identificadores COMMA ID .
 
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for BEGIN resolved as shift
-    ID              shift and go to state 22
-    IF              shift and go to state 23
-    WHILE           shift and go to state 24
-    BEGIN           shift and go to state 9
-    ELSE            reduce using rule 40 (empty -> .)
-    END             reduce using rule 40 (empty -> .)
+    COLON           reduce using rule 9 (lista_identificadores -> lista_identificadores COMMA ID .)
+    COMMA           reduce using rule 9 (lista_identificadores -> lista_identificadores COMMA ID .)
 
-  ! ID              [ reduce using rule 40 (empty -> .) ]
-  ! IF              [ reduce using rule 40 (empty -> .) ]
-  ! WHILE           [ reduce using rule 40 (empty -> .) ]
-  ! BEGIN           [ reduce using rule 40 (empty -> .) ]
-
-    statement                      shift and go to state 59
-    assignment                     shift and go to state 18
-    if_statement                   shift and go to state 19
-    while_statement                shift and go to state 20
-    block                          shift and go to state 21
-    empty                          shift and go to state 60
 
 state 46
 
-    (24) expression -> expression OP_AD . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (15) comando_list -> comando_list SEMI comando .
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    END             reduce using rule 15 (comando_list -> comando_list SEMI comando .)
+    SEMI            reduce using rule 15 (comando_list -> comando_list SEMI comando .)
 
-    term                           shift and go to state 61
-    factor                         shift and go to state 34
 
 state 47
 
-    (25) expression -> expression OP_MIN . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (20) atribuicao -> ID ASSIGN expressao .
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    END             reduce using rule 20 (atribuicao -> ID ASSIGN expressao .)
+    SEMI            reduce using rule 20 (atribuicao -> ID ASSIGN expressao .)
+    ELSE            reduce using rule 20 (atribuicao -> ID ASSIGN expressao .)
 
-    term                           shift and go to state 62
-    factor                         shift and go to state 34
 
 state 48
 
-    (27) expression -> expression OP_EQ . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (21) comando_condicional -> IF expressao THEN . comando
+    (22) comando_condicional -> IF expressao THEN . comando ELSE comando
+    (16) comando -> . atribuicao
+    (17) comando -> . comando_composto
+    (18) comando -> . comando_condicional
+    (19) comando -> . comando_repetitivo
+    (20) atribuicao -> . ID ASSIGN expressao
+    (13) comando_composto -> . BEGIN comando_list END
+    (21) comando_condicional -> . IF expressao THEN comando
+    (22) comando_condicional -> . IF expressao THEN comando ELSE comando
+    (23) comando_repetitivo -> . WHILE expressao DO comando
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              shift and go to state 22
+    BEGIN           shift and go to state 11
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
 
-    term                           shift and go to state 63
-    factor                         shift and go to state 34
+    comando                        shift and go to state 62
+    atribuicao                     shift and go to state 18
+    comando_composto               shift and go to state 19
+    comando_condicional            shift and go to state 20
+    comando_repetitivo             shift and go to state 21
 
 state 49
 
-    (28) expression -> expression OP_GE . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (25) expressao -> expressao_simples relacao . expressao_simples
+    (32) expressao_simples -> . termo
+    (33) expressao_simples -> . expressao_simples PLUS termo
+    (34) expressao_simples -> . expressao_simples MINUS termo
+    (35) termo -> . fator
+    (36) termo -> . termo TIMES fator
+    (37) termo -> . termo DIVIDE fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-    term                           shift and go to state 64
-    factor                         shift and go to state 34
+    expressao_simples              shift and go to state 63
+    termo                          shift and go to state 33
+    fator                          shift and go to state 34
 
 state 50
 
-    (29) expression -> expression OP_GT . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (33) expressao_simples -> expressao_simples PLUS . termo
+    (35) termo -> . fator
+    (36) termo -> . termo TIMES fator
+    (37) termo -> . termo DIVIDE fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-    term                           shift and go to state 65
-    factor                         shift and go to state 34
+    termo                          shift and go to state 64
+    fator                          shift and go to state 34
 
 state 51
 
-    (30) expression -> expression OP_LE . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (34) expressao_simples -> expressao_simples MINUS . termo
+    (35) termo -> . fator
+    (36) termo -> . termo TIMES fator
+    (37) termo -> . termo DIVIDE fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-    term                           shift and go to state 66
-    factor                         shift and go to state 34
+    termo                          shift and go to state 65
+    fator                          shift and go to state 34
 
 state 52
 
-    (31) expression -> expression OP_LT . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (26) relacao -> EQ .
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              reduce using rule 26 (relacao -> EQ .)
+    NUM_INT         reduce using rule 26 (relacao -> EQ .)
+    NUM_REAL        reduce using rule 26 (relacao -> EQ .)
+    LPAREN          reduce using rule 26 (relacao -> EQ .)
 
-    term                           shift and go to state 67
-    factor                         shift and go to state 34
 
 state 53
 
-    (32) expression -> expression OP_NE . term
-    (33) term -> . term OP_MUL factor
-    (34) term -> . term OP_DIV factor
-    (35) term -> . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (27) relacao -> NE .
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              reduce using rule 27 (relacao -> NE .)
+    NUM_INT         reduce using rule 27 (relacao -> NE .)
+    NUM_REAL        reduce using rule 27 (relacao -> NE .)
+    LPAREN          reduce using rule 27 (relacao -> NE .)
 
-    term                           shift and go to state 68
-    factor                         shift and go to state 34
 
 state 54
 
-    (33) term -> term OP_MUL . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (28) relacao -> LT .
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              reduce using rule 28 (relacao -> LT .)
+    NUM_INT         reduce using rule 28 (relacao -> LT .)
+    NUM_REAL        reduce using rule 28 (relacao -> LT .)
+    LPAREN          reduce using rule 28 (relacao -> LT .)
 
-    factor                         shift and go to state 69
 
 state 55
 
-    (34) term -> term OP_DIV . factor
-    (36) factor -> . NUM_INT
-    (37) factor -> . NUM_FLT
-    (38) factor -> . ID
-    (39) factor -> . SMB_OPA expression SMB_CPA
+    (29) relacao -> LE .
 
-    NUM_INT         shift and go to state 35
-    NUM_FLT         shift and go to state 36
-    ID              shift and go to state 37
-    SMB_OPA         shift and go to state 38
+    ID              reduce using rule 29 (relacao -> LE .)
+    NUM_INT         reduce using rule 29 (relacao -> LE .)
+    NUM_REAL        reduce using rule 29 (relacao -> LE .)
+    LPAREN          reduce using rule 29 (relacao -> LE .)
 
-    factor                         shift and go to state 70
 
 state 56
 
-    (39) factor -> SMB_OPA expression . SMB_CPA
-    (24) expression -> expression . OP_AD term
-    (25) expression -> expression . OP_MIN term
-    (27) expression -> expression . OP_EQ term
-    (28) expression -> expression . OP_GE term
-    (29) expression -> expression . OP_GT term
-    (30) expression -> expression . OP_LE term
-    (31) expression -> expression . OP_LT term
-    (32) expression -> expression . OP_NE term
+    (30) relacao -> GT .
 
-    SMB_CPA         shift and go to state 71
-    OP_AD           shift and go to state 46
-    OP_MIN          shift and go to state 47
-    OP_EQ           shift and go to state 48
-    OP_GE           shift and go to state 49
-    OP_GT           shift and go to state 50
-    OP_LE           shift and go to state 51
-    OP_LT           shift and go to state 52
-    OP_NE           shift and go to state 53
+    ID              reduce using rule 30 (relacao -> GT .)
+    NUM_INT         reduce using rule 30 (relacao -> GT .)
+    NUM_REAL        reduce using rule 30 (relacao -> GT .)
+    LPAREN          reduce using rule 30 (relacao -> GT .)
 
 
 state 57
 
-    (23) while_statement -> WHILE expression DO . statement
-    (14) statement -> . assignment SMB_SEM
-    (15) statement -> . if_statement
-    (16) statement -> . while_statement
-    (17) statement -> . block SMB_SEM
-    (18) statement -> . empty
-    (19) assignment -> . ID OP_ASS expression
-    (20) if_statement -> . IF expression THEN statement else_clause
-    (23) while_statement -> . WHILE expression DO statement
-    (2) block -> . BEGIN statement_list END
-    (40) empty -> .
+    (31) relacao -> GE .
 
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for BEGIN resolved as shift
-    ID              shift and go to state 22
-    IF              shift and go to state 23
-    WHILE           shift and go to state 24
-    BEGIN           shift and go to state 9
-    ELSE            reduce using rule 40 (empty -> .)
-    END             reduce using rule 40 (empty -> .)
+    ID              reduce using rule 31 (relacao -> GE .)
+    NUM_INT         reduce using rule 31 (relacao -> GE .)
+    NUM_REAL        reduce using rule 31 (relacao -> GE .)
+    LPAREN          reduce using rule 31 (relacao -> GE .)
 
-  ! ID              [ reduce using rule 40 (empty -> .) ]
-  ! IF              [ reduce using rule 40 (empty -> .) ]
-  ! WHILE           [ reduce using rule 40 (empty -> .) ]
-  ! BEGIN           [ reduce using rule 40 (empty -> .) ]
-
-    statement                      shift and go to state 72
-    assignment                     shift and go to state 18
-    if_statement                   shift and go to state 19
-    while_statement                shift and go to state 20
-    block                          shift and go to state 21
-    empty                          shift and go to state 60
 
 state 58
 
-    (5) var_list -> id_list COLON type SMB_SEM . var_list
-    (6) var_list -> id_list COLON type SMB_SEM .
-    (5) var_list -> . id_list COLON type SMB_SEM var_list
-    (6) var_list -> . id_list COLON type SMB_SEM
-    (7) var_list -> . empty
-    (8) id_list -> . ID
-    (9) id_list -> . ID SMB_COM id_list
-    (40) empty -> .
+    (36) termo -> termo TIMES . fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-  ! reduce/reduce conflict for BEGIN resolved using rule 6 (var_list -> id_list COLON type SMB_SEM .)
-    BEGIN           reduce using rule 6 (var_list -> id_list COLON type SMB_SEM .)
-    ID              shift and go to state 13
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-  ! BEGIN           [ reduce using rule 40 (empty -> .) ]
-
-    id_list                        shift and go to state 11
-    var_list                       shift and go to state 73
-    empty                          shift and go to state 12
+    fator                          shift and go to state 66
 
 state 59
 
-    (20) if_statement -> IF expression THEN statement . else_clause
-    (21) else_clause -> . ELSE statement
-    (22) else_clause -> . empty
-    (40) empty -> .
+    (37) termo -> termo DIVIDE . fator
+    (38) fator -> . ID
+    (39) fator -> . NUM_INT
+    (40) fator -> . NUM_REAL
+    (41) fator -> . LPAREN expressao RPAREN
 
-  ! shift/reduce conflict for ELSE resolved as shift
-    ELSE            shift and go to state 75
-    ID              reduce using rule 40 (empty -> .)
-    IF              reduce using rule 40 (empty -> .)
-    WHILE           reduce using rule 40 (empty -> .)
-    BEGIN           reduce using rule 40 (empty -> .)
-    END             reduce using rule 40 (empty -> .)
+    ID              shift and go to state 35
+    NUM_INT         shift and go to state 36
+    NUM_REAL        shift and go to state 37
+    LPAREN          shift and go to state 38
 
-  ! ELSE            [ reduce using rule 40 (empty -> .) ]
-
-    else_clause                    shift and go to state 74
-    empty                          shift and go to state 76
+    fator                          shift and go to state 67
 
 state 60
 
-    (18) statement -> empty .
+    (41) fator -> LPAREN expressao . RPAREN
 
-    ELSE            reduce using rule 18 (statement -> empty .)
-    ID              reduce using rule 18 (statement -> empty .)
-    IF              reduce using rule 18 (statement -> empty .)
-    WHILE           reduce using rule 18 (statement -> empty .)
-    BEGIN           reduce using rule 18 (statement -> empty .)
-    END             reduce using rule 18 (statement -> empty .)
+    RPAREN          shift and go to state 68
 
 
 state 61
 
-    (24) expression -> expression OP_AD term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (23) comando_repetitivo -> WHILE expressao DO . comando
+    (16) comando -> . atribuicao
+    (17) comando -> . comando_composto
+    (18) comando -> . comando_condicional
+    (19) comando -> . comando_repetitivo
+    (20) atribuicao -> . ID ASSIGN expressao
+    (13) comando_composto -> . BEGIN comando_list END
+    (21) comando_condicional -> . IF expressao THEN comando
+    (22) comando_condicional -> . IF expressao THEN comando ELSE comando
+    (23) comando_repetitivo -> . WHILE expressao DO comando
 
-    THEN            reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_AD           reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_MIN          reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_EQ           reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_GE           reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_GT           reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_LE           reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_LT           reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_NE           reduce using rule 24 (expression -> expression OP_AD term .)
-    DO              reduce using rule 24 (expression -> expression OP_AD term .)
-    SMB_SEM         reduce using rule 24 (expression -> expression OP_AD term .)
-    SMB_CPA         reduce using rule 24 (expression -> expression OP_AD term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    ID              shift and go to state 22
+    BEGIN           shift and go to state 11
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
 
+    comando                        shift and go to state 69
+    atribuicao                     shift and go to state 18
+    comando_composto               shift and go to state 19
+    comando_condicional            shift and go to state 20
+    comando_repetitivo             shift and go to state 21
 
 state 62
 
-    (25) expression -> expression OP_MIN term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (21) comando_condicional -> IF expressao THEN comando .
+    (22) comando_condicional -> IF expressao THEN comando . ELSE comando
 
-    THEN            reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_AD           reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_MIN          reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_EQ           reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_GE           reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_GT           reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_LE           reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_LT           reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_NE           reduce using rule 25 (expression -> expression OP_MIN term .)
-    DO              reduce using rule 25 (expression -> expression OP_MIN term .)
-    SMB_SEM         reduce using rule 25 (expression -> expression OP_MIN term .)
-    SMB_CPA         reduce using rule 25 (expression -> expression OP_MIN term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+  ! shift/reduce conflict for ELSE resolved as shift
+    END             reduce using rule 21 (comando_condicional -> IF expressao THEN comando .)
+    SEMI            reduce using rule 21 (comando_condicional -> IF expressao THEN comando .)
+    ELSE            shift and go to state 70
+
+  ! ELSE            [ reduce using rule 21 (comando_condicional -> IF expressao THEN comando .) ]
 
 
 state 63
 
-    (27) expression -> expression OP_EQ term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (25) expressao -> expressao_simples relacao expressao_simples .
+    (33) expressao_simples -> expressao_simples . PLUS termo
+    (34) expressao_simples -> expressao_simples . MINUS termo
 
-    THEN            reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_AD           reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_MIN          reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_EQ           reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_GE           reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_GT           reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_LE           reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_LT           reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_NE           reduce using rule 27 (expression -> expression OP_EQ term .)
-    DO              reduce using rule 27 (expression -> expression OP_EQ term .)
-    SMB_SEM         reduce using rule 27 (expression -> expression OP_EQ term .)
-    SMB_CPA         reduce using rule 27 (expression -> expression OP_EQ term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    THEN            reduce using rule 25 (expressao -> expressao_simples relacao expressao_simples .)
+    DO              reduce using rule 25 (expressao -> expressao_simples relacao expressao_simples .)
+    END             reduce using rule 25 (expressao -> expressao_simples relacao expressao_simples .)
+    SEMI            reduce using rule 25 (expressao -> expressao_simples relacao expressao_simples .)
+    ELSE            reduce using rule 25 (expressao -> expressao_simples relacao expressao_simples .)
+    RPAREN          reduce using rule 25 (expressao -> expressao_simples relacao expressao_simples .)
+    PLUS            shift and go to state 50
+    MINUS           shift and go to state 51
 
 
 state 64
 
-    (28) expression -> expression OP_GE term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (33) expressao_simples -> expressao_simples PLUS termo .
+    (36) termo -> termo . TIMES fator
+    (37) termo -> termo . DIVIDE fator
 
-    THEN            reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_AD           reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_MIN          reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_EQ           reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_GE           reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_GT           reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_LE           reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_LT           reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_NE           reduce using rule 28 (expression -> expression OP_GE term .)
-    DO              reduce using rule 28 (expression -> expression OP_GE term .)
-    SMB_SEM         reduce using rule 28 (expression -> expression OP_GE term .)
-    SMB_CPA         reduce using rule 28 (expression -> expression OP_GE term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    PLUS            reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    MINUS           reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    EQ              reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    NE              reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    LT              reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    LE              reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    GT              reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    GE              reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    THEN            reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    DO              reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    END             reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    SEMI            reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    ELSE            reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    RPAREN          reduce using rule 33 (expressao_simples -> expressao_simples PLUS termo .)
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
 
 
 state 65
 
-    (29) expression -> expression OP_GT term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (34) expressao_simples -> expressao_simples MINUS termo .
+    (36) termo -> termo . TIMES fator
+    (37) termo -> termo . DIVIDE fator
 
-    THEN            reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_AD           reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_MIN          reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_EQ           reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_GE           reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_GT           reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_LE           reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_LT           reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_NE           reduce using rule 29 (expression -> expression OP_GT term .)
-    DO              reduce using rule 29 (expression -> expression OP_GT term .)
-    SMB_SEM         reduce using rule 29 (expression -> expression OP_GT term .)
-    SMB_CPA         reduce using rule 29 (expression -> expression OP_GT term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    PLUS            reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    MINUS           reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    EQ              reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    NE              reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    LT              reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    LE              reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    GT              reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    GE              reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    THEN            reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    DO              reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    END             reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    SEMI            reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    ELSE            reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    RPAREN          reduce using rule 34 (expressao_simples -> expressao_simples MINUS termo .)
+    TIMES           shift and go to state 58
+    DIVIDE          shift and go to state 59
 
 
 state 66
 
-    (30) expression -> expression OP_LE term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (36) termo -> termo TIMES fator .
 
-    THEN            reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_AD           reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_MIN          reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_EQ           reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_GE           reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_GT           reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_LE           reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_LT           reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_NE           reduce using rule 30 (expression -> expression OP_LE term .)
-    DO              reduce using rule 30 (expression -> expression OP_LE term .)
-    SMB_SEM         reduce using rule 30 (expression -> expression OP_LE term .)
-    SMB_CPA         reduce using rule 30 (expression -> expression OP_LE term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    TIMES           reduce using rule 36 (termo -> termo TIMES fator .)
+    DIVIDE          reduce using rule 36 (termo -> termo TIMES fator .)
+    PLUS            reduce using rule 36 (termo -> termo TIMES fator .)
+    MINUS           reduce using rule 36 (termo -> termo TIMES fator .)
+    EQ              reduce using rule 36 (termo -> termo TIMES fator .)
+    NE              reduce using rule 36 (termo -> termo TIMES fator .)
+    LT              reduce using rule 36 (termo -> termo TIMES fator .)
+    LE              reduce using rule 36 (termo -> termo TIMES fator .)
+    GT              reduce using rule 36 (termo -> termo TIMES fator .)
+    GE              reduce using rule 36 (termo -> termo TIMES fator .)
+    THEN            reduce using rule 36 (termo -> termo TIMES fator .)
+    DO              reduce using rule 36 (termo -> termo TIMES fator .)
+    END             reduce using rule 36 (termo -> termo TIMES fator .)
+    SEMI            reduce using rule 36 (termo -> termo TIMES fator .)
+    ELSE            reduce using rule 36 (termo -> termo TIMES fator .)
+    RPAREN          reduce using rule 36 (termo -> termo TIMES fator .)
 
 
 state 67
 
-    (31) expression -> expression OP_LT term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (37) termo -> termo DIVIDE fator .
 
-    THEN            reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_AD           reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_MIN          reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_EQ           reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_GE           reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_GT           reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_LE           reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_LT           reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_NE           reduce using rule 31 (expression -> expression OP_LT term .)
-    DO              reduce using rule 31 (expression -> expression OP_LT term .)
-    SMB_SEM         reduce using rule 31 (expression -> expression OP_LT term .)
-    SMB_CPA         reduce using rule 31 (expression -> expression OP_LT term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    TIMES           reduce using rule 37 (termo -> termo DIVIDE fator .)
+    DIVIDE          reduce using rule 37 (termo -> termo DIVIDE fator .)
+    PLUS            reduce using rule 37 (termo -> termo DIVIDE fator .)
+    MINUS           reduce using rule 37 (termo -> termo DIVIDE fator .)
+    EQ              reduce using rule 37 (termo -> termo DIVIDE fator .)
+    NE              reduce using rule 37 (termo -> termo DIVIDE fator .)
+    LT              reduce using rule 37 (termo -> termo DIVIDE fator .)
+    LE              reduce using rule 37 (termo -> termo DIVIDE fator .)
+    GT              reduce using rule 37 (termo -> termo DIVIDE fator .)
+    GE              reduce using rule 37 (termo -> termo DIVIDE fator .)
+    THEN            reduce using rule 37 (termo -> termo DIVIDE fator .)
+    DO              reduce using rule 37 (termo -> termo DIVIDE fator .)
+    END             reduce using rule 37 (termo -> termo DIVIDE fator .)
+    SEMI            reduce using rule 37 (termo -> termo DIVIDE fator .)
+    ELSE            reduce using rule 37 (termo -> termo DIVIDE fator .)
+    RPAREN          reduce using rule 37 (termo -> termo DIVIDE fator .)
 
 
 state 68
 
-    (32) expression -> expression OP_NE term .
-    (33) term -> term . OP_MUL factor
-    (34) term -> term . OP_DIV factor
+    (41) fator -> LPAREN expressao RPAREN .
 
-    THEN            reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_AD           reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_MIN          reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_EQ           reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_GE           reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_GT           reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_LE           reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_LT           reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_NE           reduce using rule 32 (expression -> expression OP_NE term .)
-    DO              reduce using rule 32 (expression -> expression OP_NE term .)
-    SMB_SEM         reduce using rule 32 (expression -> expression OP_NE term .)
-    SMB_CPA         reduce using rule 32 (expression -> expression OP_NE term .)
-    OP_MUL          shift and go to state 54
-    OP_DIV          shift and go to state 55
+    TIMES           reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    DIVIDE          reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    PLUS            reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    MINUS           reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    EQ              reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    NE              reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    LT              reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    LE              reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    GT              reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    GE              reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    THEN            reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    DO              reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    END             reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    SEMI            reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    ELSE            reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
+    RPAREN          reduce using rule 41 (fator -> LPAREN expressao RPAREN .)
 
 
 state 69
 
-    (33) term -> term OP_MUL factor .
+    (23) comando_repetitivo -> WHILE expressao DO comando .
 
-    OP_MUL          reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_DIV          reduce using rule 33 (term -> term OP_MUL factor .)
-    THEN            reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_AD           reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_MIN          reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_EQ           reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_GE           reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_GT           reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_LE           reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_LT           reduce using rule 33 (term -> term OP_MUL factor .)
-    OP_NE           reduce using rule 33 (term -> term OP_MUL factor .)
-    DO              reduce using rule 33 (term -> term OP_MUL factor .)
-    SMB_SEM         reduce using rule 33 (term -> term OP_MUL factor .)
-    SMB_CPA         reduce using rule 33 (term -> term OP_MUL factor .)
+    END             reduce using rule 23 (comando_repetitivo -> WHILE expressao DO comando .)
+    SEMI            reduce using rule 23 (comando_repetitivo -> WHILE expressao DO comando .)
+    ELSE            reduce using rule 23 (comando_repetitivo -> WHILE expressao DO comando .)
 
 
 state 70
 
-    (34) term -> term OP_DIV factor .
+    (22) comando_condicional -> IF expressao THEN comando ELSE . comando
+    (16) comando -> . atribuicao
+    (17) comando -> . comando_composto
+    (18) comando -> . comando_condicional
+    (19) comando -> . comando_repetitivo
+    (20) atribuicao -> . ID ASSIGN expressao
+    (13) comando_composto -> . BEGIN comando_list END
+    (21) comando_condicional -> . IF expressao THEN comando
+    (22) comando_condicional -> . IF expressao THEN comando ELSE comando
+    (23) comando_repetitivo -> . WHILE expressao DO comando
 
-    OP_MUL          reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_DIV          reduce using rule 34 (term -> term OP_DIV factor .)
-    THEN            reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_AD           reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_MIN          reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_EQ           reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_GE           reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_GT           reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_LE           reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_LT           reduce using rule 34 (term -> term OP_DIV factor .)
-    OP_NE           reduce using rule 34 (term -> term OP_DIV factor .)
-    DO              reduce using rule 34 (term -> term OP_DIV factor .)
-    SMB_SEM         reduce using rule 34 (term -> term OP_DIV factor .)
-    SMB_CPA         reduce using rule 34 (term -> term OP_DIV factor .)
+    ID              shift and go to state 22
+    BEGIN           shift and go to state 11
+    IF              shift and go to state 23
+    WHILE           shift and go to state 24
 
+    comando                        shift and go to state 71
+    atribuicao                     shift and go to state 18
+    comando_composto               shift and go to state 19
+    comando_condicional            shift and go to state 20
+    comando_repetitivo             shift and go to state 21
 
 state 71
 
-    (39) factor -> SMB_OPA expression SMB_CPA .
+    (22) comando_condicional -> IF expressao THEN comando ELSE comando .
 
-    OP_MUL          reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_DIV          reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    THEN            reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_AD           reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_MIN          reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_EQ           reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_GE           reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_GT           reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_LE           reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_LT           reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    OP_NE           reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    DO              reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    SMB_SEM         reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-    SMB_CPA         reduce using rule 39 (factor -> SMB_OPA expression SMB_CPA .)
-
-
-state 72
-
-    (23) while_statement -> WHILE expression DO statement .
-
-    ID              reduce using rule 23 (while_statement -> WHILE expression DO statement .)
-    IF              reduce using rule 23 (while_statement -> WHILE expression DO statement .)
-    WHILE           reduce using rule 23 (while_statement -> WHILE expression DO statement .)
-    BEGIN           reduce using rule 23 (while_statement -> WHILE expression DO statement .)
-    END             reduce using rule 23 (while_statement -> WHILE expression DO statement .)
-    ELSE            reduce using rule 23 (while_statement -> WHILE expression DO statement .)
-
-
-state 73
-
-    (5) var_list -> id_list COLON type SMB_SEM var_list .
-
-    BEGIN           reduce using rule 5 (var_list -> id_list COLON type SMB_SEM var_list .)
-
-
-state 74
-
-    (20) if_statement -> IF expression THEN statement else_clause .
-
-    ID              reduce using rule 20 (if_statement -> IF expression THEN statement else_clause .)
-    IF              reduce using rule 20 (if_statement -> IF expression THEN statement else_clause .)
-    WHILE           reduce using rule 20 (if_statement -> IF expression THEN statement else_clause .)
-    BEGIN           reduce using rule 20 (if_statement -> IF expression THEN statement else_clause .)
-    END             reduce using rule 20 (if_statement -> IF expression THEN statement else_clause .)
-    ELSE            reduce using rule 20 (if_statement -> IF expression THEN statement else_clause .)
-
-
-state 75
-
-    (21) else_clause -> ELSE . statement
-    (14) statement -> . assignment SMB_SEM
-    (15) statement -> . if_statement
-    (16) statement -> . while_statement
-    (17) statement -> . block SMB_SEM
-    (18) statement -> . empty
-    (19) assignment -> . ID OP_ASS expression
-    (20) if_statement -> . IF expression THEN statement else_clause
-    (23) while_statement -> . WHILE expression DO statement
-    (2) block -> . BEGIN statement_list END
-    (40) empty -> .
-
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for WHILE resolved as shift
-  ! shift/reduce conflict for BEGIN resolved as shift
-    ID              shift and go to state 22
-    IF              shift and go to state 23
-    WHILE           shift and go to state 24
-    BEGIN           shift and go to state 9
-    ELSE            reduce using rule 40 (empty -> .)
-    END             reduce using rule 40 (empty -> .)
-
-  ! ID              [ reduce using rule 40 (empty -> .) ]
-  ! IF              [ reduce using rule 40 (empty -> .) ]
-  ! WHILE           [ reduce using rule 40 (empty -> .) ]
-  ! BEGIN           [ reduce using rule 40 (empty -> .) ]
-
-    statement                      shift and go to state 77
-    assignment                     shift and go to state 18
-    if_statement                   shift and go to state 19
-    while_statement                shift and go to state 20
-    block                          shift and go to state 21
-    empty                          shift and go to state 60
-
-state 76
-
-    (22) else_clause -> empty .
-
-    ELSE            reduce using rule 22 (else_clause -> empty .)
-    ID              reduce using rule 22 (else_clause -> empty .)
-    IF              reduce using rule 22 (else_clause -> empty .)
-    WHILE           reduce using rule 22 (else_clause -> empty .)
-    BEGIN           reduce using rule 22 (else_clause -> empty .)
-    END             reduce using rule 22 (else_clause -> empty .)
-
-
-state 77
-
-    (21) else_clause -> ELSE statement .
-
-    ELSE            reduce using rule 21 (else_clause -> ELSE statement .)
-    ID              reduce using rule 21 (else_clause -> ELSE statement .)
-    IF              reduce using rule 21 (else_clause -> ELSE statement .)
-    WHILE           reduce using rule 21 (else_clause -> ELSE statement .)
-    BEGIN           reduce using rule 21 (else_clause -> ELSE statement .)
-    END             reduce using rule 21 (else_clause -> ELSE statement .)
+    END             reduce using rule 22 (comando_condicional -> IF expressao THEN comando ELSE comando .)
+    SEMI            reduce using rule 22 (comando_condicional -> IF expressao THEN comando ELSE comando .)
+    ELSE            reduce using rule 22 (comando_condicional -> IF expressao THEN comando ELSE comando .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for ID in state 9 resolved as shift
-WARNING: shift/reduce conflict for IF in state 9 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 9 resolved as shift
-WARNING: shift/reduce conflict for BEGIN in state 9 resolved as shift
-WARNING: shift/reduce conflict for ID in state 16 resolved as shift
-WARNING: shift/reduce conflict for IF in state 16 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 16 resolved as shift
-WARNING: shift/reduce conflict for BEGIN in state 16 resolved as shift
-WARNING: shift/reduce conflict for ID in state 45 resolved as shift
-WARNING: shift/reduce conflict for IF in state 45 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 45 resolved as shift
-WARNING: shift/reduce conflict for BEGIN in state 45 resolved as shift
-WARNING: shift/reduce conflict for ID in state 57 resolved as shift
-WARNING: shift/reduce conflict for IF in state 57 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 57 resolved as shift
-WARNING: shift/reduce conflict for BEGIN in state 57 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 59 resolved as shift
-WARNING: shift/reduce conflict for ID in state 75 resolved as shift
-WARNING: shift/reduce conflict for IF in state 75 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 75 resolved as shift
-WARNING: shift/reduce conflict for BEGIN in state 75 resolved as shift
-WARNING: reduce/reduce conflict in state 17 resolved using rule (statement_list -> empty)
-WARNING: rejected rule (statement -> empty) in state 17
-WARNING: reduce/reduce conflict in state 58 resolved using rule (var_list -> id_list COLON type SMB_SEM)
-WARNING: rejected rule (empty -> <empty>) in state 58
+WARNING: shift/reduce conflict for ELSE in state 62 resolved as shift
