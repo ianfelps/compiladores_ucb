@@ -4,7 +4,8 @@ import ply.lex as lex
 tokens = [
     'PROGRAM', 'ID', 'SEMI', 'DOT', 'VAR', 'COLON', 'INTEGER', 'REAL', 'BOOLEAN', 'BEGIN', 
     'END', 'ASSIGN', 'IF', 'THEN', 'ELSE', 'WHILE', 'DO', 'EQ', 'NE', 'LT', 'LE', 'GT', 'GE',
-    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'NUM_INT', 'NUM_REAL', 'LPAREN', 'RPAREN', 'COMMA'
+    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'NUM_INT', 'NUM_REAL', 'LPAREN', 'RPAREN', 'COMMA',
+    'STRING', 'ERROR_UNCLOSED_STRING'
 ]
 
 # Palavras reservadas
@@ -76,6 +77,19 @@ def t_NUM_INT(t):
     t.value = int(t.value)
     return t
 
+# Função para capturar strings e verificar erros de fechamento
+def t_STRING(t):
+    r"'([^\\']|\\.)*'"  # Regex para capturar strings entre aspas simples
+    t.value = t.value[1:-1]  # Remove as aspas do valor capturado
+    return t
+
+# Captura strings não fechadas corretamente (erro de fechamento)
+def t_ERROR_UNCLOSED_STRING(t):
+    r"'([^\\']|\\.)*"  # Começa capturando qualquer string que inicie com aspas simples
+    print(f"Erro léxico: string não fechada corretamente na linha {t.lineno}")
+    t.lexer.skip(len(t.value))  # Ignora o restante da string incompleta
+    return None  # Retorna None para parar o processamento do token
+
 # Define a linha dos erros
 def t_newline(t):
     r'\n+'
@@ -83,7 +97,7 @@ def t_newline(t):
 
 # Tratamento de erros
 def t_error(t):
-    print(f"Caractere ilegal '{t.value[0]}' na linha {t.lexer.lineno}")
+    print(f"Caractere ilegal '{t.value[0]}' na linha {t.lineno}")
     t.lexer.skip(1)
 
 # Construção do lexer

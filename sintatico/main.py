@@ -6,10 +6,10 @@ with open("codigo.txt", "r") as file:
     code = file.read()
 
 # Executar o analisador léxico
-lexer.input(code)
-print("Tokens:")
-for token in lexer:
-    print(token)
+# lexer.input(code)
+# print("Tokens:")
+# for token in lexer:
+#     print(token)
 
 # Executar o analisador sintático
 print("\nAnalisando...")
